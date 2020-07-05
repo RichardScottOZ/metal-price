@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/chutified/metal-value-api/currency/protos/currency"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,12 +11,14 @@ func main() {
 	r.Use(gin.Recovery())
 
 	// currency client
-	currency.NewCurrencyClient()
+	//currency.NewCurrencyClient()
 
 	// routes
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
+
+	r.GET("/")
 
 	r.Run(":9000")
 }

@@ -20,7 +20,7 @@ func main() {
 	currency.RegisterCurrencyServer(grpcSrv, currencySrv)
 	reflection.Register(grpcSrv)
 
-	lst, err := net.Listen("tcp", "9001")
+	lst, err := net.Listen("tcp", ":9091")
 	if err != nil {
 		logger.Fatalf("Unable to listen: %v", err)
 	}

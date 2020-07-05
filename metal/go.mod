@@ -1,3 +1,3 @@
-module github.com/chutified/metal-value-api/metal
+module github.com/chutified/metal-price/metal
 
 go 1.14
