@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option go_package = ".;metal";
+
+package metal;
+
+service Metal {
+    // GetValue provides the price of the metal.
+    rpc GetPrice (MetalRequest) returns (MetalResponse);
+}
+
+// MetalRequest defines the request for the GetPrice call.
+message MetalRequest {
+    // Metal is the metal for which the value is provided.
+    Materials Metal = 1;
+}
+
+// MetalResponse defines the response for the GetPrice call.
+message MetalResponse {
+    // Price is the price of the metal.
+    double Price = 1; // USD, per ounce
+}
+
+// Meterials are the materials that can be priced.
+enum Materials {
+    Gold = 0;
+    Silver = 1;
+    Platinum = 2;
+    Palladium = 3;
+    Copper = 4;
+    Rhodium = 5;
+}
