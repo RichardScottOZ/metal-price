@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/chutified/metal-value-api/currency/protos/currency"
+	"github.com/chutified/metal-value/currency/protos/currency"
 )
 
 // Currency is a currency server.

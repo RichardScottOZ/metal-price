@@ -5,8 +5,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/chutified/metal-value-api/currency/protos/currency"
-	"github.com/chutified/metal-value-api/currency/server"
+	"github.com/chutified/metal-value/currency/protos/currency"
+	"github.com/chutified/metal-value/currency/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
