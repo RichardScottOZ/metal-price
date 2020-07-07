@@ -1,12 +1,12 @@
 package main
 
 import (
-	"context"
 	"log"
 	"os"
-	"strconv"
 
-	"github.com/chutified/metal-value-api/currency/protos/currency"
+	"github.com/chutified/metal-price/api/handlers"
+	"github.com/chutified/metal-price/api/middlewares"
+	"github.com/chutified/metal-price/currency/protos/currency"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 )
@@ -14,44 +14,28 @@ import (
 func main() {
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 
-	// gin router
-	r := gin.New()
-	r.Use(gin.Recovery())
-
 	// currency client
-	conn, err := grpc.Dial("localhost:10501")
+	conn, err := grpc.Dial("localhost:10501", grpc.WithInsecure())
 	if err != nil {
-		logger.Panic("Unable to dial: %v", err)
+		logger.Panicf("unable to dial: %v", err)
 	}
 	defer conn.Close()
 	cc := currency.NewCurrencyClient(conn)
 
+	// gin router
+	r := gin.New()
+
+	// middlewares
+	r.Use(gin.Recovery())
+	r.Use(gin.Logger())
+
 	// routes
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
-	})
-	r.GET("/rate/:base/:dest", func(c *gin.Context) {
-		base, err := strconv.ParseInt(c.Param("base"), 10, 32)
-		if err != nil {
-			c.String(200, "invalid params")
-			return
-		}
+	r.GET("/ping", handlers.Ping)
 
-		dest, err := strconv.ParseInt(c.Param("dest"), 10, 32)
-		if err != nil {
-			c.String(200, "invalid params")
-			return
-		}
-
-		cc.GetRate(context.Background(), &currency.RateRequest{
-			Base:        currency.Currencies(base),
-			Destination: currency.Currencies(dest),
-		})
-
-		c.String(200, "pong")
-	})
-
-	r.GET("/")
+	// pricing
+	api := r.Group("/api")
+	api.Use(middlewares.CurrencyClientMiddleware(cc))
+	api.GET("/rate/:base/:dest", handlers.GetPrice) // TODO temp, refactor
 
 	r.Run(":8080")
 }
