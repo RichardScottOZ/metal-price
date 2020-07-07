@@ -4,30 +4,41 @@ import (
 	"context"
 	"log"
 
-	"github.com/chutified/metal-value/currency/protos/currency"
+	"github.com/chutified/metal-price/currency/data"
+	"github.com/chutified/metal-price/currency/protos/currency"
 )
 
 // Currency is a currency server.
 type Currency struct {
-	logger *log.Logger
+	log   *log.Logger
+	rates *data.Rates
 }
 
-// New is a contructor for the Currency server.
-func New(l *log.Logger) *Currency {
+// NewCurrency is a contructor for the Currency server.
+func NewCurrency(l *log.Logger, r *data.Rates) *Currency {
 	return &Currency{
-		logger: l,
+		log:   l,
+		rates: r,
 	}
 }
 
 // GetRate returns a exchange rate of the request's base and destination currencies.
 func (c *Currency) GetRate(ctx context.Context, req *currency.RateRequest) (*currency.RateResponse, error) {
-	strBase := currency.Currencies_name[int32(req.GetBase())]
-	strDest := currency.Currencies_name[int32(req.GetDestination())]
-	c.logger.Printf("Handler GetRate, base: %s, destination: %s\n", strBase, strDest)
 
-	res := currency.RateResponse{
-		Rate: 0.5,
+	// get currencies
+	base := req.GetBase().String()
+	dest := req.GetDestination().String()
+
+	// logging
+	c.log.Printf("Handler GetRate, base: %s, destination: %s\n", base, dest)
+
+	// get the rate
+	rate, err := c.rates.GetRate(base, dest)
+	if err != nil {
+		return nil, err
 	}
 
-	return &res, nil
+	rateResp := currency.RateResponse{Rate: float32(rate)}
+
+	return &rateResp, nil
 }
