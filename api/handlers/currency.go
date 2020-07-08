@@ -1,21 +1,26 @@
 package handlers
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/chutified/metal-price/api/services"
 	"github.com/gin-gonic/gin"
 )
 
 // GetPrice returns price of a metal.
-// TODO temporary
-func GetPrice(c *gin.Context) {
+func (h *Handler) GetRate(c *gin.Context) {
 
 	// get paramas
 	base, dest := c.Param("base"), c.Param("dest")
+	base, dest = strings.ToUpper(base), strings.ToUpper(dest)
 
 	// call the service
-	rate, err := services.GetRate(c, base, dest)
+	rate, err := services.GetRate(h.cc, base, dest)
 	if err != nil {
-		c.String(500, "unable to call currency service: %v", err)
+		c.JSON(400, gin.H{
+			"error": fmt.Sprintf("unable to call currency service: %v", err),
+		})
 		return
 	}
 

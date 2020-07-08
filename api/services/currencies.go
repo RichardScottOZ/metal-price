@@ -2,17 +2,22 @@ package services
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/chutified/metal-price/currency/protos/currency"
-	"github.com/gin-gonic/gin"
 )
 
 // GetRate provides the exchange rate of the base and destination.
-func GetRate(c *gin.Context, baseP, destP string) (float32, error) {
-	cc := c.Value("currency_client").(currency.CurrencyClient)
+func GetRate(cc currency.CurrencyClient, baseP, destP string) (float32, error) {
 
-	base := currency.Currencies_value[baseP]
-	dest := currency.Currencies_value[destP]
+	base, ok := currency.Currencies_value[baseP]
+	if !ok {
+		return 0, fmt.Errorf("currency %s not found", baseP)
+	}
+	dest, ok := currency.Currencies_value[destP]
+	if !ok {
+		return 0, fmt.Errorf("currency %s not found", destP)
+	}
 
 	// request of the currency service
 	request := &currency.RateRequest{

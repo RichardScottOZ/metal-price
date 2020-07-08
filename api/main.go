@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/chutified/metal-price/api/handlers"
-	"github.com/chutified/metal-price/api/middlewares"
 	"github.com/chutified/metal-price/currency/protos/currency"
+	"github.com/chutified/metal-price/metal/protos/metal"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 )
@@ -15,12 +15,23 @@ func main() {
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 
 	// currency client
-	conn, err := grpc.Dial("localhost:10501", grpc.WithInsecure())
+	currencyConn, err := grpc.Dial("localhost:10501", grpc.WithInsecure())
 	if err != nil {
 		logger.Panicf("unable to dial: %v", err)
 	}
-	defer conn.Close()
-	cc := currency.NewCurrencyClient(conn)
+	defer currencyConn.Close()
+	cc := currency.NewCurrencyClient(currencyConn)
+
+	// metal client
+	metalConn, err := grpc.Dial("localhost:10502", grpc.WithInsecure())
+	if err != nil {
+		logger.Panicf("unable to dial: %v", err)
+	}
+	defer metalConn.Close()
+	mc := metal.NewMetalClient(metalConn)
+
+	// construct a new Handler
+	h := handlers.NewHandler(logger, cc, mc)
 
 	// gin router
 	r := gin.New()
@@ -32,10 +43,9 @@ func main() {
 	// routes
 	r.GET("/ping", handlers.Ping)
 
-	// pricing
 	api := r.Group("/api")
-	api.Use(middlewares.CurrencyClientMiddleware(cc))
-	api.GET("/rate/:base/:dest", handlers.GetPrice) // TODO temp, refactor
+	api.GET("/rate/:base/:dest", h.GetRate)
+	api.GET("/metal/:metal", h.GetPrice)
 
 	r.Run(":8080")
 }
