@@ -26,7 +26,6 @@ func (m *Metal) GetPrice(materialP string) (float64, error) {
 	if !ok {
 		return 0, fmt.Errorf("material %v not found", materialP)
 	}
-	fmt.Println(material)
 
 	// create request
 	request := &metal.MetalRequest{Metal: metal.Materials(material)}

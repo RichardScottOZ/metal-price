@@ -1,9 +1,0 @@
----
-PORTS:
-  api: 8080
-  currency: 10501
-  metal: 10502
-
-APIS:
-  currency: https://api.exchangeratesapi.io/latest
-  metal: https://www.moneymetals.com/api/spot-prices.json
