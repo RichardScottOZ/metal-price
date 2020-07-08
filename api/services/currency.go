@@ -7,8 +7,20 @@ import (
 	"github.com/chutified/metal-price/currency/protos/currency"
 )
 
-// GetRate provides the exchange rate of the base and destination.
-func GetRate(cc currency.CurrencyClient, baseP, destP string) (float32, error) {
+// Currency handles the currency services.
+type Currency struct {
+	client currency.CurrencyClient
+}
+
+// NewCurrency is a constructor for the Currency service.
+func NewCurrency(cc currency.CurrencyClient) *Currency {
+	return &Currency{
+		client: cc,
+	}
+}
+
+// GetRate call the service and returns the rate of two currencies.
+func (c *Currency) GetRate(baseP, destP string) (float32, error) {
 
 	base, ok := currency.Currencies_value[baseP]
 	if !ok {
@@ -26,7 +38,7 @@ func GetRate(cc currency.CurrencyClient, baseP, destP string) (float32, error) {
 	}
 
 	// call currency service
-	response, err := cc.GetRate(context.Background(), request)
+	response, err := c.client.GetRate(context.Background(), request)
 	if err != nil {
 		return -1, err
 	}

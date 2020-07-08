@@ -4,19 +4,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/chutified/metal-price/api/services"
 	"github.com/gin-gonic/gin"
 )
 
-// GetPrice returns price of a metal.
-func (h *Handler) GetRate(c *gin.Context) {
+// Exchange returns the exchage rate between the base and destination currency.
+func (h *Handler) Exchange(c *gin.Context) {
 
 	// get paramas
 	base, dest := c.Param("base"), c.Param("dest")
 	base, dest = strings.ToUpper(base), strings.ToUpper(dest)
 
 	// call the service
-	rate, err := services.GetRate(h.cc, base, dest)
+	rate, err := h.cs.GetRate(base, dest)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": fmt.Sprintf("unable to call currency service: %v", err),

@@ -3,22 +3,21 @@ package handlers
 import (
 	"log"
 
-	"github.com/chutified/metal-price/currency/protos/currency"
-	"github.com/chutified/metal-price/metal/protos/metal"
+	"github.com/chutified/metal-price/api/services"
 )
 
 // Handler defines the api handler.
 type Handler struct {
 	log *log.Logger
-	cc  currency.CurrencyClient
-	mc  metal.MetalClient
+	cs  *services.Currency
+	ms  *services.Metal
 }
 
 // NewHandler is the constructor of the Handler.
-func NewHandler(l *log.Logger, cc currency.CurrencyClient, mc metal.MetalClient) *Handler {
+func NewHandler(l *log.Logger, cs *services.Currency, ms *services.Metal) *Handler {
 	return &Handler{
 		log: l,
-		cc:  cc,
-		mc:  mc,
+		cs:  cs,
+		ms:  ms,
 	}
 }

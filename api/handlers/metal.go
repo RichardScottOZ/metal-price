@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/chutified/metal-price/api/services"
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) GetPrice(c *gin.Context) {
+// MetalPrice return the price of the ounce of the metal in USD.
+func (h *Handler) MetalPrice(c *gin.Context) {
 
 	// get param
 	m := c.Param("metal")
 	m = strings.ToLower(m)
 
 	// call the service
-	price, err := services.GetPrice(h.mc, m)
+	price, err := h.ms.GetPrice(m)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": fmt.Sprintf("call metal service: %v", err),

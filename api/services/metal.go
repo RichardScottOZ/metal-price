@@ -7,7 +7,20 @@ import (
 	"github.com/chutified/metal-price/metal/protos/metal"
 )
 
-func GetPrice(mc metal.MetalClient, materialP string) (float64, error) {
+// Metal handles the metal price services.
+type Metal struct {
+	client metal.MetalClient
+}
+
+// NewMetal is a constructor for the Metal service.
+func NewMetal(mc metal.MetalClient) *Metal {
+	return &Metal{
+		client: mc,
+	}
+}
+
+// GetPrice call the service and returns the price of the metal.
+func (m *Metal) GetPrice(materialP string) (float64, error) {
 
 	material, ok := metal.Materials_value[materialP]
 	if !ok {
@@ -19,7 +32,7 @@ func GetPrice(mc metal.MetalClient, materialP string) (float64, error) {
 	request := &metal.MetalRequest{Metal: metal.Materials(material)}
 
 	// call the service
-	response, err := mc.GetPrice(context.Background(), request)
+	response, err := m.client.GetPrice(context.Background(), request)
 	if err != nil {
 		return 0, err
 	}
