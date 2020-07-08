@@ -69,11 +69,8 @@ func (p *Prices) getPrices(api string) error {
 		}
 
 		// filter
-		for pos, char := range price {
-			if char == ',' || char == '$' {
-				price = string(append([]rune(price[:pos]), []rune(price[pos+1:])...))
-			}
-		}
+		price = strings.ReplaceAll(price, "$", "")
+		price = strings.ReplaceAll(price, ",", "")
 
 		p.prices[material], _ = strconv.ParseFloat(price, 64)
 	}
