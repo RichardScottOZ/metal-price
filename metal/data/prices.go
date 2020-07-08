@@ -24,10 +24,11 @@ func NewPrices(l *log.Logger, src string) (*Prices, error) {
 	p := &Prices{
 		log:    l,
 		prices: map[string]float64{},
+		source: src,
 	}
 
 	// update prices
-	err := p.getPrices(src)
+	err := p.getPrices()
 	if err != nil {
 		return nil, fmt.Errorf("could not update metal prices: %w", err)
 	}
@@ -37,6 +38,14 @@ func NewPrices(l *log.Logger, src string) (*Prices, error) {
 
 // GetPrice provides the price of the metal.
 func (p *Prices) GetPrice(m string) (float64, error) {
+
+	// update data
+	err := p.getPrices()
+	if err != nil {
+		p.log.Printf("Could not update exchange rates, using the data from the last call.")
+	}
+
+	// get price
 	price, ok := p.prices[m]
 	if !ok {
 		return 0, fmt.Errorf("material %s not found", m)
@@ -45,9 +54,9 @@ func (p *Prices) GetPrice(m string) (float64, error) {
 }
 
 // getPrices udpates the map of prices in price data service
-func (p *Prices) getPrices(api string) error {
+func (p *Prices) getPrices() error {
 
-	body, err := pricesAPI(api)
+	body, err := pricesAPI(p.source)
 	if err != nil {
 		return fmt.Errorf("metal api error: %w", err)
 	}

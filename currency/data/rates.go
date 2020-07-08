@@ -22,12 +22,13 @@ func NewRates(l *log.Logger, src string) (*Rates, error) {
 
 	// contruct
 	r := &Rates{
-		log:   l,
-		rates: map[string]float64{},
+		log:    l,
+		rates:  map[string]float64{},
+		source: src,
 	}
 
 	// update rates
-	err := r.getRates(src)
+	err := r.getRates()
 	if err != nil {
 		return nil, fmt.Errorf("could not update exchange rates: %w", err)
 	}
@@ -37,6 +38,12 @@ func NewRates(l *log.Logger, src string) (*Rates, error) {
 
 // GetRate returns rate of the two currencies.
 func (r *Rates) GetRate(base, dest string) (float64, error) {
+
+	// update
+	err := r.getRates()
+	if err != nil {
+		r.log.Printf("Could not update prices, using the data from the last call.")
+	}
 
 	// validation
 	d, ok := r.rates[dest]
@@ -54,9 +61,9 @@ func (r *Rates) GetRate(base, dest string) (float64, error) {
 }
 
 // getRates updates exchange rates for the data service Rates.
-func (r *Rates) getRates(api string) error {
+func (r *Rates) getRates() error {
 
-	body, err := currencyAPI(api)
+	body, err := currencyAPI(r.source)
 	if err != nil {
 		return fmt.Errorf("currency api error: %w", err)
 	}
