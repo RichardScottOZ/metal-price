@@ -3,7 +3,7 @@ package handlers
 import (
 	"log"
 
-	"github.com/chutified/metal-price/api/services"
+	"github.com/chutified/metal-price/server/services"
 )
 
 // Handler defines the api handler.

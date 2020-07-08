@@ -4,10 +4,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/chutified/metal-price/api/handlers"
-	"github.com/chutified/metal-price/api/services"
 	"github.com/chutified/metal-price/currency/protos/currency"
 	"github.com/chutified/metal-price/metal/protos/metal"
+	"github.com/chutified/metal-price/server/handlers"
+	"github.com/chutified/metal-price/server/services"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 )
