@@ -11,7 +11,7 @@ func GetPrice(mc metal.MetalClient, materialP string) (float64, error) {
 
 	material, ok := metal.Materials_value[materialP]
 	if !ok {
-		return 0, fmt.Errrorf("material %v not found: %w", materialP, err)
+		return 0, fmt.Errorf("material %v not found", materialP)
 	}
 	fmt.Println(material)
 
