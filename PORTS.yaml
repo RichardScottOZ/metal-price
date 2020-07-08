@@ -6,3 +6,4 @@ PORTS:
 
 APIS:
   currency: https://api.exchangeratesapi.io/latest
+  metal: https://www.moneymetals.com/api/spot-prices.json
