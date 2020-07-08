@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	logger := log.New(os.Stdout, "", log.LstdFlags)
+	logger := log.New(os.Stdout, "currency-service: ", log.LstdFlags)
 
 	// data service
 	rateService, err := data.NewRates(logger)
@@ -22,17 +22,18 @@ func main() {
 	}
 
 	// server
-	currencySrv := server.NewCurrency(logger, rateService)
+	currencyServer := server.NewCurrency(logger, rateService)
 	grpcSrv := grpc.NewServer()
 
 	// register the server
-	currency.RegisterCurrencyServer(grpcSrv, currencySrv)
-	// register the reflection
+	currency.RegisterCurrencyServer(grpcSrv, currencyServer)
+	// reflection responses
 	reflection.Register(grpcSrv)
 
-	lst, err := net.Listen("tcp", ":10501")
+	// run server
+	listen, err := net.Listen("tcp", ":10501")
 	if err != nil {
 		logger.Fatalf("unable to listen: %v", err)
 	}
-	grpcSrv.Serve(lst)
+	grpcSrv.Serve(listen)
 }

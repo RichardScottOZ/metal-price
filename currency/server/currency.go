@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/chutified/metal-price/currency/data"
@@ -30,15 +31,15 @@ func (c *Currency) GetRate(ctx context.Context, req *currency.RateRequest) (*cur
 	dest := req.GetDestination().String()
 
 	// logging
-	c.log.Printf("Handler GetRate, base: %s, destination: %s\n", base, dest)
+	c.log.Printf("Handle GetRate, base: %s, destination: %s\n", base, dest)
 
 	// get the rate
 	rate, err := c.rates.GetRate(base, dest)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("could not call GetRate currency service: %w", err)
 	}
 
+	// success
 	rateResp := currency.RateResponse{Rate: float32(rate)}
-
 	return &rateResp, nil
 }
