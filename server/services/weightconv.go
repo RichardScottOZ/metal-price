@@ -4,8 +4,8 @@ import "fmt"
 
 var units = map[string]float64{
 	"oz": 1,
-	"kg": 0.0283495231,
-	"lb": 0.0625,
+	"kg": 35.2739619,
+	"lb": 16,
 }
 
 // GetWeightRate returns the rate between two weight units.

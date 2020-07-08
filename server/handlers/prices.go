@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"math"
 	"strings"
 
 	"github.com/chutified/metal-price/server/services"
@@ -17,14 +18,15 @@ func (h *Handler) GetPrice(c *gin.Context) {
 	metal = strings.ToLower(metal)
 	// currency
 	curr := c.Param("currency")
-	curr = strings.ToLower(curr)
+	curr = strings.ToUpper(curr)
 	// unit
 	unit := c.Param("unit")
+	//unit = strings.ReplaceAll(unit, "/", "")
 	unit = strings.ToLower(unit)
 
 	// SERVICE CALLS
 	// currency
-	currRate, err := h.cs.GetRate("usd", curr)
+	currRate, err := h.cs.GetRate("USD", curr)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": fmt.Sprintf("unable to call currency service: %v", err),
@@ -63,6 +65,7 @@ func (h *Handler) GetPrice(c *gin.Context) {
 		return
 	}
 	price *= unitRate
+	price = math.Round(price*100) / 100
 
 	// success
 	c.JSON(200, gin.H{

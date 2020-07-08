@@ -47,7 +47,7 @@ func main() {
 	r.GET("/ping", handlers.Ping)
 
 	api := r.Group("/api")
-	api.GET("/:metal/:currency/*unit", h.GetPrice)
+	api.GET("/:metal/:currency/:unit", h.GetPrice)
 
 	r.Run(":8080")
 }
