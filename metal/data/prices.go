@@ -16,17 +16,18 @@ import (
 type Prices struct {
 	log    *log.Logger
 	prices map[string]float64
+	source string
 }
 
 // NewPrices construct a new price data service.
-func NewPrices(l *log.Logger) (*Prices, error) {
+func NewPrices(l *log.Logger, src string) (*Prices, error) {
 	p := &Prices{
 		log:    l,
 		prices: map[string]float64{},
 	}
 
 	// update prices
-	err := p.getPrices("https://www.moneymetals.com/api/spot-prices.json")
+	err := p.getPrices(src)
 	if err != nil {
 		return nil, fmt.Errorf("could not update metal prices: %w", err)
 	}

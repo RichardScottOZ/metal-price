@@ -12,12 +12,13 @@ import (
 
 // Rates defines the exchange rates.
 type Rates struct {
-	log   *log.Logger
-	rates map[string]float64
+	log    *log.Logger
+	rates  map[string]float64
+	source string
 }
 
 // NewRates returns an new empty data service.
-func NewRates(l *log.Logger) (*Rates, error) {
+func NewRates(l *log.Logger, src string) (*Rates, error) {
 
 	// contruct
 	r := &Rates{
@@ -26,7 +27,7 @@ func NewRates(l *log.Logger) (*Rates, error) {
 	}
 
 	// update rates
-	err := r.getRates("https://api.exchangeratesapi.io/latest")
+	err := r.getRates(src)
 	if err != nil {
 		return nil, fmt.Errorf("could not update exchange rates: %w", err)
 	}

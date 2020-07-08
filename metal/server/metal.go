@@ -22,6 +22,7 @@ func NewMetal(l *log.Logger, pr *data.Prices) *Metal {
 }
 
 func (m *Metal) GetPrice(ctx context.Context, req *metal.MetalRequest) (*metal.MetalResponse, error) {
+
 	// get material
 	material := req.GetMetal().String()
 
