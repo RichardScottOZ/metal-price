@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/chutified/metal-price/currency/protos/currency"
@@ -18,23 +17,21 @@ import (
 
 // App is a server controller.
 type App struct {
-	logger *log.Logger
-	server *http.Server
-	engine *gin.Engine
-
+	logger      *log.Logger
+	server      *http.Server
+	engine      *gin.Engine
 	connections []*grpc.ClientConn
 }
 
 // NewApp returns new App controller.
-func NewApp() *App {
-	return &App{}
+func NewApp(l *log.Logger) *App {
+	return &App{
+		logger: l,
+	}
 }
 
 // Init sets everything for the App controller.
 func (a *App) Init(cfg *config.Config) error {
-
-	// logger
-	a.logger = log.New(os.Stdout, "[APP] ", log.LstdFlags)
 
 	// currency client
 	currencyConn, err := grpc.Dial(cfg.CurrencyService, grpc.WithInsecure())

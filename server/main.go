@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -10,9 +9,7 @@ import (
 )
 
 func main() {
-
-	// logging
-	logger := log.New(os.Stdout, "metal-service: ", log.LstdFlags)
+	logger := log.New(os.Stdout, "[SERVER] ", log.LstdFlags)
 
 	// config
 	cfg, err := config.GetConfig("config.yaml")
@@ -21,18 +18,18 @@ func main() {
 	}
 
 	// init app
-	a := app.NewApp()
+	a := app.NewApp(logger)
 	err = a.Init(cfg)
 	if err != nil {
-		panic(fmt.Errorf("initialize app: %w", err))
+		logger.Panicf("initialize app: %v", err)
 	}
 	defer func() {
 		errs := a.Stop()
 		for i, err := range errs {
-			fmt.Printf("close error %d: %v\n", i, err)
+			logger.Printf("close error %d: %v\n", i, err)
 		}
 	}()
 
 	// run
-	panic(fmt.Errorf("run app: %w", a.Run()))
+	logger.Panicf("run app: %v", a.Run())
 }
