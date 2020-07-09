@@ -1,53 +1,38 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
-	"github.com/chutified/metal-price/currency/protos/currency"
-	"github.com/chutified/metal-price/metal/protos/metal"
-	"github.com/chutified/metal-price/server/handlers"
-	"github.com/chutified/metal-price/server/services"
-	"github.com/gin-gonic/gin"
-	"google.golang.org/grpc"
+	"github.com/chutified/metal-price/server/app"
+	"github.com/chutified/metal-price/server/config"
 )
 
 func main() {
-	logger := log.New(os.Stdout, "", log.LstdFlags)
 
-	// currency client
-	currencyConn, err := grpc.Dial("localhost:10501", grpc.WithInsecure())
+	// logging
+	logger := log.New(os.Stdout, "metal-service: ", log.LstdFlags)
+
+	// config
+	cfg, err := config.GetConfig("config.yaml")
 	if err != nil {
-		logger.Panicf("unable to dial: %v", err)
+		logger.Fatalf("get config: %v", err)
 	}
-	defer currencyConn.Close()
-	currencyClient := currency.NewCurrencyClient(currencyConn)
-	cs := services.NewCurrency(currencyClient)
 
-	// metal client
-	metalConn, err := grpc.Dial("localhost:10502", grpc.WithInsecure())
+	// init app
+	a := app.NewApp()
+	err = a.Init(cfg)
 	if err != nil {
-		logger.Panicf("unable to dial: %v", err)
+		panic(fmt.Errorf("initialize app: %w", err))
 	}
-	defer metalConn.Close()
-	metalClient := metal.NewMetalClient(metalConn)
-	ms := services.NewMetal(metalClient)
+	defer func() {
+		errs := a.Stop()
+		for i, err := range errs {
+			fmt.Printf("close error %d: %v\n", i, err)
+		}
+	}()
 
-	// construct a new Handler
-	h := handlers.NewHandler(logger, cs, ms)
-
-	// gin router
-	r := gin.New()
-
-	// middlewares
-	r.Use(gin.Recovery())
-	r.Use(gin.Logger())
-
-	// routes
-	r.GET("/ping", handlers.Ping)
-
-	api := r.Group("/api")
-	api.GET("/:metal/:currency/:unit", h.GetPrice)
-
-	r.Run(":8080")
+	// run
+	panic(fmt.Errorf("run app: %w", a.Run()))
 }
