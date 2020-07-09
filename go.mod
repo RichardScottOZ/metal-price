@@ -3,6 +3,7 @@ module github.com/chutified/metal-price
 go 1.14
 
 require (
+	github.com/chutified/metal-price/currency v0.0.0-20200708084315-6911a09c385b
 	github.com/chutified/metal-price/metal v0.0.0-20200708084315-6911a09c385b
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.4.2
