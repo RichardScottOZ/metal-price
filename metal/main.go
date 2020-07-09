@@ -1,46 +1,29 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net"
 	"os"
 
 	"github.com/chutified/metal-price/metal/config"
-	"github.com/chutified/metal-price/metal/data"
-	"github.com/chutified/metal-price/metal/protos/metal"
-	"github.com/chutified/metal-price/metal/server"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
+	"github.com/chutified/metal-price/metal/service"
 )
 
 func main() {
-	logger := log.New(os.Stdout, "metal-service: ", log.LstdFlags)
+	logger := log.New(os.Stdout, "[METAL SERVICE] ", log.LstdFlags)
 
+	// config
 	cfg, err := config.GetConfig("config.yaml")
 	if err != nil {
 		logger.Fatalf("get config: %v", err)
 	}
 
-	// data service
-	pricesService, err := data.NewPrices(logger, cfg.Source)
+	// init service
+	s := service.NewService(logger)
+	err = s.Init(cfg)
 	if err != nil {
-		logger.Fatalf("could not construct metal price data service: %v", err)
+		logger.Fatalf("initialize the service: %v", err)
 	}
 
-	// server
-	metalServer := server.NewMetal(logger, pricesService)
-	grpcSrv := grpc.NewServer()
-
-	// register server
-	metal.RegisterMetalServer(grpcSrv, metalServer)
-	// reflection
-	reflection.Register(grpcSrv)
-
-	// run server
-	listen, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
-	if err != nil {
-		logger.Fatalf("unable to listen: %v", err)
-	}
-	grpcSrv.Serve(listen)
+	// run
+	logger.Fatalf("run the service: %v", s.Run(cfg))
 }
