@@ -8,9 +8,10 @@ currencies:
     EUR, CAD, HKD, ISK, PHP, DKK, HUF, CZK, AUD, RON, SEK, IDR, INR, BRL, RUB, HRK, JPY, THB, CHF, SGD, PLN, BGN, TRY, CNY, NOK, NZD, ZAR, USD, MXN, ILS, GBP, KRW, MYR
 
 TODO:
-    debug mode
+    fix ambiguous imports: metal/currency
     hard import packages
-    api documentation
     unit tests
-    Dockerize
-    root Makefile
+    api documentation
+    Dockerize (kuberts orchestr)
+    root Makefile + packages Makefiles
+    README.md bs
