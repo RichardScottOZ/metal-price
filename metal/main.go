@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/chutified/metal-price/metal/config"
-	"github.com/chutified/metal-price/metal/service"
+	config "github.com/chutified/metal-price/metal/config"
+	service "github.com/chutified/metal-price/metal/service"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/chutified/metal-price/api-server/app/handlers"
+	handlers "github.com/chutified/metal-price/api-server/app/handlers"
 	"github.com/gin-gonic/gin"
 )
 

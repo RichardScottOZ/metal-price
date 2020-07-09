@@ -5,10 +5,10 @@ import (
 	"log"
 	"net"
 
-	"github.com/chutified/metal-price/metal/config"
-	"github.com/chutified/metal-price/metal/service/data"
-	"github.com/chutified/metal-price/metal/service/protos/metal"
-	"github.com/chutified/metal-price/metal/service/server"
+	config "github.com/chutified/metal-price/metal/config"
+	data "github.com/chutified/metal-price/metal/service/data"
+	metal "github.com/chutified/metal-price/metal/service/protos/metal"
+	server "github.com/chutified/metal-price/metal/service/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/chutified/metal-price/metal/service/protos/metal"
+	metal "github.com/chutified/metal-price/metal/service/protos/metal"
 )
 
 // Metal handles the metal price services.

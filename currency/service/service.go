@@ -5,10 +5,10 @@ import (
 	"log"
 	"net"
 
-	"github.com/chutified/metal-price/currency/config"
-	"github.com/chutified/metal-price/currency/service/data"
-	"github.com/chutified/metal-price/currency/service/protos/currency"
-	"github.com/chutified/metal-price/currency/service/server"
+	config "github.com/chutified/metal-price/currency/config"
+	data "github.com/chutified/metal-price/currency/service/data"
+	currency "github.com/chutified/metal-price/currency/service/protos/currency"
+	server "github.com/chutified/metal-price/currency/service/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
