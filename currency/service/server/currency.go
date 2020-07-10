@@ -32,7 +32,7 @@ func (c *Currency) GetRate(ctx context.Context, req *currency.RateRequest) (*cur
 	var err error
 	c.rates, err = data.NewRates(c.log, c.cfg.Source)
 	if err != nil {
-		c.log.Fatalf("could not construct currency price data service: %v", err)
+		return nil, fmt.Errorf("could not construct currency price data service: %v", err)
 	}
 
 	// get currencies

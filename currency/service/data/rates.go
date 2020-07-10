@@ -63,8 +63,17 @@ func (r *Rates) getRates() error {
 	}
 
 	// query base and rates
-	base := gojsonq.New().FromString(string(body)).Find("base").(string)
-	rates := gojsonq.New().FromString(string(body)).From("rates").Get().(map[string]interface{})
+	resp1 := gojsonq.New().FromString(string(body)).Find("base")
+	base, ok := resp1.(string)
+	if !ok {
+		return fmt.Errorf("invalid source: %w", err)
+	}
+
+	resp2 := gojsonq.New().FromString(string(body)).From("rates").Get()
+	rates, ok := resp2.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("invalid source: %w", err)
+	}
 
 	// set rates
 	r.rates[base] = 1.0
