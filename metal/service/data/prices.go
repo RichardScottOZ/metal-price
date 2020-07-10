@@ -39,12 +39,6 @@ func NewPrices(l *log.Logger, src string) (*Prices, error) {
 // GetPrice provides the price of the metal.
 func (p *Prices) GetPrice(m string) (float64, error) {
 
-	// update data
-	err := p.getPrices()
-	if err != nil {
-		p.log.Printf("Could not update exchange rates, using the data from the last call.")
-	}
-
 	// get price
 	price, ok := p.prices[m]
 	if !ok {
@@ -62,7 +56,12 @@ func (p *Prices) getPrices() error {
 	}
 
 	// query material prices
-	m := gojsonq.New().FromString(string(body)).Get().(map[string]interface{})
+	resp := gojsonq.New().FromString(string(body)).Get()
+	m, ok := resp.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("invalid source: %w", err)
+	}
+
 	for material, attributes := range m {
 		material = strings.ToLower(material)
 

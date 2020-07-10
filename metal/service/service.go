@@ -6,7 +6,6 @@ import (
 	"net"
 
 	config "github.com/chutified/metal-price/metal/config"
-	data "github.com/chutified/metal-price/metal/service/data"
 	metal "github.com/chutified/metal-price/metal/service/protos/metal"
 	server "github.com/chutified/metal-price/metal/service/server"
 	"google.golang.org/grpc"
@@ -29,14 +28,8 @@ func NewService(l *log.Logger) *Service {
 // Init defines service attributes.
 func (s *Service) Init(cfg *config.Config) error {
 
-	// data service
-	pricesService, err := data.NewPrices(s.logger, cfg.Source)
-	if err != nil {
-		return fmt.Errorf("could not construct metal price data service: %w", err)
-	}
-
 	// servers
-	metalServer := server.NewMetal(s.logger, pricesService)
+	metalServer := server.NewMetal(s.logger, cfg)
 	grpcSrv := grpc.NewServer()
 
 	// register server

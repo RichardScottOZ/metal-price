@@ -1,0 +1,4 @@
+---
+test-invalid
+PORT: 10502
+source: https://www.moneymetals.com/api/spot-prices.json

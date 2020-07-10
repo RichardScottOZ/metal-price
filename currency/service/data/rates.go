@@ -39,12 +39,6 @@ func NewRates(l *log.Logger, src string) (*Rates, error) {
 // GetRate returns rate of the two currencies.
 func (r *Rates) GetRate(base, dest string) (float64, error) {
 
-	// update
-	err := r.getRates()
-	if err != nil {
-		r.log.Printf("Could not update prices, using the data from the last call.")
-	}
-
 	// validation
 	d, ok := r.rates[dest]
 	if !ok {

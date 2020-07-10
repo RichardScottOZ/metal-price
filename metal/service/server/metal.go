@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	config "github.com/chutified/metal-price/metal/config"
 	data "github.com/chutified/metal-price/metal/service/data"
 	metal "github.com/chutified/metal-price/metal/service/protos/metal"
 )
@@ -13,18 +14,26 @@ import (
 type Metal struct {
 	log    *log.Logger
 	prices *data.Prices
+	cfg    *config.Config
 }
 
 // NewMetal constructs a new server.
-func NewMetal(l *log.Logger, pr *data.Prices) *Metal {
+func NewMetal(l *log.Logger, cfg *config.Config) *Metal {
 	return &Metal{
-		log:    l,
-		prices: pr,
+		log: l,
+		cfg: cfg,
 	}
 }
 
 // GetPrice handles thegRPC request.
 func (m *Metal) GetPrice(ctx context.Context, req *metal.MetalRequest) (*metal.MetalResponse, error) {
+
+	// data service
+	var err error
+	m.prices, err = data.NewPrices(m.log, m.cfg.Source)
+	if err != nil {
+		return nil, fmt.Errorf("could not construct metal price data service: %w", err)
+	}
 
 	// get material
 	material := req.GetMetal().String()

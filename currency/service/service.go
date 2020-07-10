@@ -6,7 +6,6 @@ import (
 	"net"
 
 	config "github.com/chutified/metal-price/currency/config"
-	data "github.com/chutified/metal-price/currency/service/data"
 	currency "github.com/chutified/metal-price/currency/service/protos/currency"
 	server "github.com/chutified/metal-price/currency/service/server"
 	"google.golang.org/grpc"
@@ -29,14 +28,8 @@ func NewService(l *log.Logger) *Service {
 // Init defines service attributes.
 func (s *Service) Init(cfg *config.Config) error {
 
-	// data service
-	rateService, err := data.NewRates(s.logger, cfg.Source)
-	if err != nil {
-		s.logger.Fatalf("could not construct currency price data service: %v", err)
-	}
-
 	// servers
-	currencyServer := server.NewCurrency(s.logger, rateService)
+	currencyServer := server.NewCurrency(s.logger, cfg)
 	grpcSrv := grpc.NewServer()
 
 	// register the server

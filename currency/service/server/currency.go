@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	config "github.com/chutified/metal-price/currency/config"
 	data "github.com/chutified/metal-price/currency/service/data"
 	currency "github.com/chutified/metal-price/currency/service/protos/currency"
 )
@@ -13,18 +14,26 @@ import (
 type Currency struct {
 	log   *log.Logger
 	rates *data.Rates
+	cfg   *config.Config
 }
 
 // NewCurrency is a contructor for the Currency server.
-func NewCurrency(l *log.Logger, r *data.Rates) *Currency {
+func NewCurrency(l *log.Logger, cfg *config.Config) *Currency {
 	return &Currency{
-		log:   l,
-		rates: r,
+		log: l,
+		cfg: cfg,
 	}
 }
 
 // GetRate returns a exchange rate of the request's base and destination currencies.
 func (c *Currency) GetRate(ctx context.Context, req *currency.RateRequest) (*currency.RateResponse, error) {
+
+	// data service
+	var err error
+	c.rates, err = data.NewRates(c.log, c.cfg.Source)
+	if err != nil {
+		c.log.Fatalf("could not construct currency price data service: %v", err)
+	}
 
 	// get currencies
 	base := req.GetBase().String()

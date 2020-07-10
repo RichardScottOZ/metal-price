@@ -9,7 +9,6 @@ currencies:
 
 TODO:
     unit tests
-    api documentation
     Dockerize (kuberts orchestr)
     root Makefile + packages Makefiles
     README.md: content, api, test, coverage, tree (3x), docker, kubernetes, examples, config.yamlS, api documentation, make commands, grpc (microservices) - grpcurl examples + results
