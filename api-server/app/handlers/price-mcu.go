@@ -10,6 +10,15 @@ import (
 )
 
 // GetMetalMCU handles request of the price of the metal.
+// @summary Get a price (metal, currency, weight unit).
+// @description Get a price of the metal in a certain currency and weight unit.
+// @produce json
+// @param metal path string true "the whole chemical name or an abbreviated version of a chemical element"
+// @param currency path string true "the currency acronym"
+// @param unit path string true "weight unit"
+// @success 200 {object} handlers.Response "ok"
+// @failure 400 {object} handlers.HTTPError "service call"
+// @router /i/{metal}/{currency}/{unit} [get]
 func (h *Handler) GetMetalMCU(c *gin.Context) {
 
 	// PARAMETERS
@@ -27,16 +36,16 @@ func (h *Handler) GetMetalMCU(c *gin.Context) {
 	// currency
 	currRate, err := h.cs.GetRate("USD", curr)
 	if err != nil {
-		c.JSON(400, gin.H{
-			"error": fmt.Sprintf("unable to call currency service: %v", err),
+		c.JSON(400, &HTTPError{
+			Message: fmt.Sprintf("unable to call currency service: %v", err),
 		})
 		return
 	}
 	// metal
 	price, err := h.ms.GetPrice(metal) // ounces
 	if err != nil {
-		c.JSON(400, gin.H{
-			"error": fmt.Sprintf("call metal service: %v", err),
+		c.JSON(400, &HTTPError{
+			Message: fmt.Sprintf("call metal service: %v", err),
 		})
 		return
 	}
@@ -46,8 +55,8 @@ func (h *Handler) GetMetalMCU(c *gin.Context) {
 	// get unit's rate
 	unitRate, err := services.GetWeightRate("oz", unit)
 	if err != nil {
-		c.JSON(400, gin.H{
-			"error": fmt.Sprintf("call weight unit converter: %v", err),
+		c.JSON(400, &HTTPError{
+			Message: fmt.Sprintf("call weight unit converter: %v", err),
 		})
 		return
 	}
@@ -55,7 +64,7 @@ func (h *Handler) GetMetalMCU(c *gin.Context) {
 
 	price = math.Round(price*100) / 100
 	// success
-	c.JSON(200, &response{
+	c.JSON(200, &Response{
 		Metal:    metal,
 		Price:    price,
 		Currency: curr,

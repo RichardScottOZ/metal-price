@@ -1,0 +1,191 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This API returns the current price of precious metals in different currencies and weight units.",
+        "title": "Metal Price API",
+        "contact": {
+            "name": "Tommy Chu",
+            "email": "tommychu2256@gmail.com"
+        },
+        "license": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/i/{metal}": {
+            "get": {
+                "description": "Get a price of the metal.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a price in USD pre an ounce (metal).",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the whole chemical name or an abbreviated version of a chemical element",
+                        "name": "metal",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "service call",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/i/{metal}/{currency}": {
+            "get": {
+                "description": "Get a price of the metal in a certain currency.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a price in ounces (metal, currency).",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the whole chemical name or an abbreviated version of a chemical element",
+                        "name": "metal",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "the currency acronym",
+                        "name": "currency",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "service call",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/i/{metal}/{currency}/{unit}": {
+            "get": {
+                "description": "Get a price of the metal in a certain currency and weight unit.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a price (metal, currency, weight unit).",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the whole chemical name or an abbreviated version of a chemical element",
+                        "name": "metal",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "the currency acronym",
+                        "name": "currency",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "weight unit",
+                        "name": "unit",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "service call",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "Check if the server is running.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Check the status.",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.HTTPError": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "description": "error response",
+                    "type": "string",
+                    "example": "call metal service: material ssilver not found"
+                }
+            }
+        },
+        "handlers.Response": {
+            "type": "object",
+            "properties": {
+                "currency": {
+                    "description": "money system",
+                    "type": "string",
+                    "example": "USD"
+                },
+                "metal": {
+                    "description": "metal element",
+                    "type": "string",
+                    "example": "rhodium"
+                },
+                "price": {
+                    "description": "value",
+                    "type": "number",
+                    "example": 8200
+                },
+                "unit": {
+                    "description": "weight unit",
+                    "type": "string",
+                    "example": "oz"
+                }
+            }
+        }
+    }
+}

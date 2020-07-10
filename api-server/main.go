@@ -6,18 +6,19 @@ import (
 
 	app "github.com/chutified/metal-price/api-server/app"
 	config "github.com/chutified/metal-price/api-server/config"
+	_ "github.com/chutified/metal-price/api-server/docs" // documentation
 )
 
-// @title Bookstore API example with Gin
+// @title Metal Price API
 // @version 1.0
-// @description This is a sample of a Gin API framework.
+// @description This API returns the current price of precious metals in different currencies and weight units.
 
 // @contact.name Tommy Chu
 // @contact.email tommychu2256@gmail.com
 
 // @schemes http
-// @host localhost:8081
-// @BasePath /api/v1
+// @host localhost:8080
+// @BasePath /
 func main() {
 	logger := log.New(os.Stdout, "[SERVER] ", log.LstdFlags)
 

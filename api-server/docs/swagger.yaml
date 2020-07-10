@@ -1,0 +1,130 @@
+basePath: /
+definitions:
+  handlers.HTTPError:
+    properties:
+      message:
+        description: error response
+        example: 'call metal service: material ssilver not found'
+        type: string
+    type: object
+  handlers.Response:
+    properties:
+      currency:
+        description: money system
+        example: USD
+        type: string
+      metal:
+        description: metal element
+        example: rhodium
+        type: string
+      price:
+        description: value
+        example: 8200
+        type: number
+      unit:
+        description: weight unit
+        example: oz
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: tommychu2256@gmail.com
+    name: Tommy Chu
+  description: This API returns the current price of precious metals in different currencies and weight units.
+  license: {}
+  title: Metal Price API
+  version: "1.0"
+paths:
+  /i/{metal}:
+    get:
+      description: Get a price of the metal.
+      parameters:
+      - description: the whole chemical name or an abbreviated version of a chemical element
+        in: path
+        name: metal
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/handlers.Response'
+        "400":
+          description: service call
+          schema:
+            $ref: '#/definitions/handlers.HTTPError'
+      summary: Get a price in USD pre an ounce (metal).
+  /i/{metal}/{currency}:
+    get:
+      description: Get a price of the metal in a certain currency.
+      parameters:
+      - description: the whole chemical name or an abbreviated version of a chemical element
+        in: path
+        name: metal
+        required: true
+        type: string
+      - description: the currency acronym
+        in: path
+        name: currency
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/handlers.Response'
+        "400":
+          description: service call
+          schema:
+            $ref: '#/definitions/handlers.HTTPError'
+      summary: Get a price in ounces (metal, currency).
+  /i/{metal}/{currency}/{unit}:
+    get:
+      description: Get a price of the metal in a certain currency and weight unit.
+      parameters:
+      - description: the whole chemical name or an abbreviated version of a chemical element
+        in: path
+        name: metal
+        required: true
+        type: string
+      - description: the currency acronym
+        in: path
+        name: currency
+        required: true
+        type: string
+      - description: weight unit
+        in: path
+        name: unit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/handlers.Response'
+        "400":
+          description: service call
+          schema:
+            $ref: '#/definitions/handlers.HTTPError'
+      summary: Get a price (metal, currency, weight unit).
+  /ping:
+    get:
+      description: Check if the server is running.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/handlers.Response'
+      summary: Check the status.
+schemes:
+- http
+swagger: "2.0"

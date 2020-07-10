@@ -3,6 +3,8 @@ package app
 import (
 	handlers "github.com/chutified/metal-price/api-server/app/handlers"
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 // SetRoutes set the app engine and its routing.
@@ -20,4 +22,7 @@ func (a *App) SetRoutes(h *handlers.Handler) {
 	api.GET("/:metal/:currency/:unit", h.GetMetalMCU)
 	api.GET("/:metal/:currency", h.GetMetalMC)
 	api.GET("/:metal", h.GetMetalM)
+
+	// documentation
+	a.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
