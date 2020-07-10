@@ -16,20 +16,22 @@ import (
 type Service struct {
 	logger *log.Logger
 	srv    *grpc.Server
+	cfg    *config.Config
 }
 
 // NewService constructs a new service controller.
-func NewService(l *log.Logger) *Service {
+func NewService(l *log.Logger, cfg *config.Config) *Service {
 	return &Service{
 		logger: l,
+		cfg:    cfg,
 	}
 }
 
 // Init defines service attributes.
-func (s *Service) Init(cfg *config.Config) error {
+func (s *Service) Init() {
 
 	// servers
-	currencyServer := server.NewCurrency(s.logger, cfg)
+	currencyServer := server.NewCurrency(s.logger, s.cfg)
 	grpcSrv := grpc.NewServer()
 
 	// register the server
@@ -39,19 +41,18 @@ func (s *Service) Init(cfg *config.Config) error {
 
 	// success
 	s.srv = grpcSrv
-	return nil
 }
 
 // Run starts the service.
-func (s *Service) Run(cfg *config.Config) error {
+func (s *Service) Run() error {
 
 	// define listen
-	listen, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
+	listen, err := net.Listen("tcp", fmt.Sprintf(":%d", s.cfg.Port))
 	if err != nil {
 		return fmt.Errorf("unable to listen: %w", err)
 	}
 
 	// listen
-	s.logger.Printf("Listening gRPC on port %d", cfg.Port)
+	s.logger.Printf("Listening gRPC on port %d", s.cfg.Port)
 	return s.srv.Serve(listen)
 }

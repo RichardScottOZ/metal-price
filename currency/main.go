@@ -18,12 +18,9 @@ func main() {
 	}
 
 	// init service
-	s := service.NewService(logger)
-	err = s.Init(cfg)
-	if err != nil {
-		logger.Fatalf("initialize the service: %v", err)
-	}
+	s := service.NewService(logger, cfg)
+	s.Init()
 
 	// run
-	logger.Fatalf("run the service: %v", s.Run(cfg))
+	logger.Fatalf("run the service: %v", s.Run())
 }
