@@ -69,7 +69,13 @@ func TestGetRare(t *testing.T) {
 			expErrMsg: "",
 		},
 		{
-			name:      "invalid currency",
+			name:      "invalid base currency",
+			base:      "invalid",
+			dest:      "EUR",
+			expErrMsg: "rate not found for currency",
+		},
+		{
+			name:      "invalid destination currency",
 			base:      "EUR",
 			dest:      "invalid",
 			expErrMsg: "rate not found for currency",
