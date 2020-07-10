@@ -41,6 +41,7 @@ func TestNewPrices(t *testing.T) {
 
 			} else {
 
+				assert.NotEqual(t1, p.log, nil)
 				assert.NotEqual(t1, p.prices["gold"], 0)
 			}
 		})
@@ -79,7 +80,6 @@ func TestGetPrice(t *testing.T) {
 			if err != nil {
 
 				exp := fmt.Sprintf(".*%s.*", test.expErrMsg)
-				fmt.Println(err.Error())
 				assert.MatchRegex(t1, err.Error(), exp)
 
 			} else {

@@ -51,7 +51,7 @@ func TestService(t *testing.T) {
 			go func() {
 				err = s.Run()
 			}()
-			time.Sleep(2 * time.Second)
+			time.Sleep(1200 * time.Millisecond)
 
 			if err != nil {
 
