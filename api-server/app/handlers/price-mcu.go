@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetPrice handles request of the price of the metal.
-func (h *Handler) GetPrice(c *gin.Context) {
+// GetMetalMCU handles request of the price of the metal.
+func (h *Handler) GetMetalMCU(c *gin.Context) {
 
 	// PARAMETERS
 	// metal
@@ -43,19 +43,6 @@ func (h *Handler) GetPrice(c *gin.Context) {
 	price *= float64(currRate)
 
 	// SERVE
-
-	// with undefined unit
-	// if unit == "" {
-	//     price = math.Round(price*100) / 100
-	//     c.JSON(200, gin.H{
-	//         "metal":    metal,
-	//         "price":    price,
-	//         "currency": curr,
-	//         "unit":     "oz",
-	//     })
-	//     return
-	// }
-
 	// get unit's rate
 	unitRate, err := services.GetWeightRate("oz", unit)
 	if err != nil {
@@ -65,8 +52,8 @@ func (h *Handler) GetPrice(c *gin.Context) {
 		return
 	}
 	price *= unitRate
-	price = math.Round(price*100) / 100
 
+	price = math.Round(price*100) / 100
 	// success
 	c.JSON(200, &response{
 		Metal:    metal,

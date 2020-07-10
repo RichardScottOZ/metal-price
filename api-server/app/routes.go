@@ -17,5 +17,7 @@ func (a *App) SetRoutes(h *handlers.Handler) {
 	a.engine.GET("/ping", handlers.Ping)
 
 	api := a.engine.Group("/i")
-	api.GET("/:metal/:currency/:unit", h.GetPrice)
+	api.GET("/:metal/:currency/:unit", h.GetMetalMCU)
+	api.GET("/:metal/:currency", h.GetMetalMC)
+	api.GET("/:metal", h.GetMetalM)
 }

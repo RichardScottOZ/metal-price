@@ -8,6 +8,16 @@ import (
 	config "github.com/chutified/metal-price/api-server/config"
 )
 
+// @title Bookstore API example with Gin
+// @version 1.0
+// @description This is a sample of a Gin API framework.
+
+// @contact.name Tommy Chu
+// @contact.email tommychu2256@gmail.com
+
+// @schemes http
+// @host localhost:8081
+// @BasePath /api/v1
 func main() {
 	logger := log.New(os.Stdout, "[SERVER] ", log.LstdFlags)
 
