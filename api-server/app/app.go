@@ -17,7 +17,7 @@ import (
 
 // App is a server controller.
 type App struct {
-	logger      *log.Logger
+	log         *log.Logger
 	server      *http.Server
 	engine      *gin.Engine
 	connections []*grpc.ClientConn
@@ -26,7 +26,7 @@ type App struct {
 // NewApp returns new App controller.
 func NewApp(l *log.Logger) *App {
 	return &App{
-		logger: l,
+		log: l,
 	}
 }
 
@@ -55,7 +55,7 @@ func (a *App) Init(cfg *config.Config) error {
 	ms := services.NewMetal(metal.NewMetalClient(metalConn))
 
 	// construct an engine
-	handler := handlers.NewHandler(a.logger, cs, ms)
+	handler := handlers.NewHandler(a.log, cs, ms)
 	a.SetRoutes(handler) // ENGINE
 
 	// server
@@ -84,6 +84,6 @@ func (a *App) Stop() []error {
 
 // Run starts the server.
 func (a *App) Run() error {
-	a.logger.Printf("Listening and serving HTTP on port %s.\n", a.server.Addr)
+	a.log.Printf("Listening and serving HTTP on port %s.\n", a.server.Addr)
 	return a.server.ListenAndServe()
 }
