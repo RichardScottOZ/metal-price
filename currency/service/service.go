@@ -14,16 +14,16 @@ import (
 
 // Service is the service controller.
 type Service struct {
-	logger *log.Logger
-	srv    *grpc.Server
-	cfg    *config.Config
+	log *log.Logger
+	srv *grpc.Server
+	cfg *config.Config
 }
 
 // NewService constructs a new service controller.
 func NewService(l *log.Logger, cfg *config.Config) *Service {
 	return &Service{
-		logger: l,
-		cfg:    cfg,
+		log: l,
+		cfg: cfg,
 	}
 }
 
@@ -31,7 +31,7 @@ func NewService(l *log.Logger, cfg *config.Config) *Service {
 func (s *Service) Init() {
 
 	// servers
-	currencyServer := server.NewCurrency(s.logger, s.cfg)
+	currencyServer := server.NewCurrency(s.log, s.cfg)
 	grpcSrv := grpc.NewServer()
 
 	// register the server
@@ -53,6 +53,6 @@ func (s *Service) Run() error {
 	}
 
 	// listen
-	s.logger.Printf("Listening gRPC on port %d", s.cfg.Port)
+	s.log.Printf("Listening gRPC on port %d", s.cfg.Port)
 	return s.srv.Serve(listen)
 }

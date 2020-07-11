@@ -23,7 +23,7 @@ func TestService(t *testing.T) {
 	s := NewService(l, cfg)
 	s.Init()
 
-	assert.NotEqual(t, s.logger, nil)
+	assert.NotEqual(t, s.log, nil)
 	assert.NotEqual(t, s.srv, nil)
 
 	tests := []struct {
