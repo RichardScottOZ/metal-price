@@ -20,9 +20,9 @@ func TestService(t *testing.T) {
 		Source: "https://api.exchangeratesapi.io/latest",
 	}
 
-	// NewService
+	// >>>>>>>>>>>>>>> NewService
 	s := NewService(l, cfg)
-	// Init
+	// >>>>>>>>>>>>>>> Init
 	s.Init()
 
 	assert.NotEqual(t, s.log, nil)
@@ -35,12 +35,12 @@ func TestService(t *testing.T) {
 	}{
 		{
 			name:      "ok",
-			action:    func() { go http.ListenAndServe(":10551", nil) },
+			action:    func() {},
 			expErrMsg: "",
 		},
 		{
 			name:      "address already in use",
-			action:    func() {},
+			action:    func() { go http.ListenAndServe(":10551", nil) },
 			expErrMsg: "unable to listen",
 		},
 	}
@@ -48,7 +48,7 @@ func TestService(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
-			// Run
+			// >>>>>>>>>>>>>>> Run
 			test.action()
 			var err error
 			go func() {
@@ -60,6 +60,7 @@ func TestService(t *testing.T) {
 
 				exp := fmt.Sprintf(".*%s.*", test.expErrMsg)
 				assert.MatchRegex(t1, err.Error(), exp)
+				fmt.Println(err)
 
 			} else {
 

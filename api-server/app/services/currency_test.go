@@ -11,11 +11,12 @@ import (
 
 func TestCurrency(t *testing.T) {
 
-	// NewCurrency
-	currencyConn, err := grpc.Dial("localhsot:10551", grpc.WithInsecure())
+	// >>>>>>>>>>>>>>> NewCurrency
+	currencyConn, err := grpc.Dial("localhost:10501", grpc.WithInsecure())
 	if err != nil {
-		t.Fatalf("unable to dial localhost:10551: %v", err)
+		t.Fatalf("unable to dial localhost:10501: %v", err)
 	}
+	defer currencyConn.Close()
 	client := currency.NewCurrencyClient(currencyConn)
 	cs := NewCurrency(client)
 
@@ -23,30 +24,35 @@ func TestCurrency(t *testing.T) {
 
 	tests := []struct {
 		name      string
+		action    func()
 		base      string
 		dest      string
 		expErrMsg string
 	}{
-		// {
-		//     name:      "ok",
-		//     base:      "USD",
-		//     dest:      "EUR",
-		//     expErrMsg: "",
-		// },
+		{
+			name:      "ok",
+			action:    func() {},
+			base:      "USD",
+			dest:      "EUR",
+			expErrMsg: "",
+		},
 		{
 			name:      "invalid base",
+			action:    func() {},
 			base:      "invalid",
 			dest:      "EUR",
 			expErrMsg: "base currency .* not found",
 		},
 		{
 			name:      "invalid destination",
+			action:    func() {},
 			base:      "USD",
 			dest:      "invalid",
 			expErrMsg: "base currency .* not found",
 		},
 		{
 			name:      "service not running",
+			action:    func() { currencyConn.Close() },
 			base:      "USD",
 			dest:      "EUR",
 			expErrMsg: "currency service",
@@ -56,7 +62,9 @@ func TestCurrency(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
-			// GetRate
+			test.action()
+
+			// >>>>>>>>>>>>>>> GetRate
 			r, err := cs.GetRate(test.base, test.dest)
 			if err != nil {
 

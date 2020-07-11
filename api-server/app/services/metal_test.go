@@ -11,11 +11,12 @@ import (
 
 func TestMetal(t *testing.T) {
 
-	// NewMetal
-	metalConn, err := grpc.Dial("localhsot:10552", grpc.WithInsecure())
+	// >>>>>>>>>>>>>>> NewMetal
+	metalConn, err := grpc.Dial("localhost:10502", grpc.WithInsecure())
 	if err != nil {
-		t.Fatalf("unable to dial localhost:10521: %v", err)
+		t.Fatalf("unable to dial localhost:10501: %v", err)
 	}
+	defer metalConn.Close()
 	client := metal.NewMetalClient(metalConn)
 	ms := NewMetal(client)
 
@@ -23,32 +24,37 @@ func TestMetal(t *testing.T) {
 
 	tests := []struct {
 		name      string
+		action    func()
 		metal     string
 		expErrMsg string
 	}{
-		// {
-		//     name:      "ok",
-		//     base:      "USD",
-		//     dest:      "EUR",
-		//     expErrMsg: "",
-		// },
 		{
-			name:      "service not running - periodic symbol",
-			metal:     "au",
-			expErrMsg: "metal service",
+			name:      "ok",
+			action:    func() {},
+			metal:     "silver",
+			expErrMsg: "",
 		},
 		{
-			name:      "invalid base",
+			name:      "ok periodic symbol",
+			action:    func() {},
+			metal:     "silver",
+			expErrMsg: "",
+		},
+		{
+			name:      "invalid metal",
+			action:    func() {},
 			metal:     "invalid",
 			expErrMsg: "material .* not found",
 		},
 		{
-			name:      "service not running - periodic symbol",
+			name:      "service not running periodic symbol",
+			action:    func() { metalConn.Close() },
 			metal:     "au",
 			expErrMsg: "metal service",
 		},
 		{
 			name:      "service not running",
+			action:    func() { metalConn.Close() },
 			metal:     "gold",
 			expErrMsg: "metal service",
 		},
@@ -57,7 +63,9 @@ func TestMetal(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
-			// GetPrice
+			test.action()
+
+			// >>>>>>>>>>>>>>> GetPrice
 			p, err := ms.GetPrice(test.metal)
 			if err != nil {
 

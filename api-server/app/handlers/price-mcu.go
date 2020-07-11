@@ -37,7 +37,7 @@ func (h *Handler) GetMetalMCU(c *gin.Context) {
 	currRate, err := h.cs.GetRate("USD", curr)
 	if err != nil {
 		c.JSON(400, &HTTPError{
-			Message: fmt.Sprintf("unable to call currency service: %v", err),
+			Message: fmt.Sprintf("call currency service: %v", err),
 		})
 		return
 	}

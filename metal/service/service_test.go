@@ -20,9 +20,9 @@ func TestService(t *testing.T) {
 		Source: "https://www.moneymetals.com/api/spot-prices.json",
 	}
 
-	// NewService
+	// >>>>>>>>>>>>>>> NewService
 	s := NewService(l, cfg)
-	// Init
+	// >>>>>>>>>>>>>>> Init
 	s.Init()
 
 	assert.NotEqual(t, s.log, nil)
@@ -35,12 +35,12 @@ func TestService(t *testing.T) {
 	}{
 		{
 			name:      "ok",
-			action:    func() { go http.ListenAndServe(":10552", nil) },
+			action:    func() {},
 			expErrMsg: "",
 		},
 		{
 			name:      "address already in use",
-			action:    func() {},
+			action:    func() { go http.ListenAndServe(":10552", nil) },
 			expErrMsg: "unable to listen",
 		},
 	}
@@ -48,7 +48,7 @@ func TestService(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
-			// Run
+			// >>>>>>>>>>>>>>> Run
 			test.action()
 			var err error
 			go func() {
