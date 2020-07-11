@@ -9,5 +9,4 @@ require (
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/go-playground/assert.v1 v1.2.1
 	gopkg.in/yaml.v2 v2.3.0
-	honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc
 )
