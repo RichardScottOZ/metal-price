@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"bytes"
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -19,31 +21,31 @@ import (
 func TestHandler(t *testing.T) {
 
 	log := log.New(bytes.NewBufferString(""), "", log.LstdFlags)
-	var h *Handler
-	var currencyConn, metalConn *grpc.ClientConn
-	defer currencyConn.Close()
-	defer metalConn.Close()
 
 	// >>>>>>>>>>>>>>> NewHandler
+	var h *Handler
+	var currencyConn, metalConn *grpc.ClientConn
 	t.Run("NewHandler", func(t1 *testing.T) {
 		var err error
 
-		currencyConn, err = grpc.Dial("localhsot:10551", grpc.WithInsecure())
+		currencyConn, err = grpc.Dial("localhost:10501", grpc.WithInsecure())
 		if err != nil {
-			t.Fatalf("unable to dial localhost:10551: %v", err)
+			t.Fatalf("unable to dial localhost:10501: %v", err)
 		}
 		currencyClient := currency.NewCurrencyClient(currencyConn)
 		cs := services.NewCurrency(currencyClient)
 
-		metalConn, err = grpc.Dial("localhsot:10552", grpc.WithInsecure())
+		metalConn, err = grpc.Dial("localhost:10502", grpc.WithInsecure())
 		if err != nil {
-			t.Fatalf("unable to dial localhost:10521: %v", err)
+			t.Fatalf("unable to dial localhost:10501: %v", err)
 		}
 		metalClient := metal.NewMetalClient(metalConn)
 		ms := services.NewMetal(metalClient)
 
 		h = NewHandler(log, cs, ms)
 	})
+	defer currencyConn.Close()
+	defer metalConn.Close()
 
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = ioutil.Discard
@@ -71,86 +73,145 @@ func TestHandler(t *testing.T) {
 	})
 
 	tests := []struct {
-		name        string
-		handlerFunc func() gin.HandlerFunc
-		metal       string
-		currency    string
-		unit        string
-		expErrMsg   string
+		name      string
+		metal     string
+		currency  string
+		unit      string
+		expCode   int
+		expErrMsg string
 	}{
 		// >>>>>>>>>>>>>>> GetMetalM
 		{
-			name:        "M ok",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalM },
-			metal:       "silver",
-			expErrMsg:   "",
+			name:      "M ok",
+			metal:     "silver",
+			expCode:   200,
+			expErrMsg: "",
 		},
 		{
-			name:        "M invalid metal",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalM },
-			metal:       "invalid",
-			expErrMsg:   "call metal service",
+			name:      "M invalid metal",
+			metal:     "invalid",
+			expCode:   400,
+			expErrMsg: "call metal service",
 		},
 		// >>>>>>>>>>>>>>> GetMetalMC
 		{
-			name:        "MC ok",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMC },
-			metal:       "silver",
-			currency:    "EUR",
-			expErrMsg:   "",
+			name:      "MC ok",
+			metal:     "silver",
+			currency:  "EUR",
+			expCode:   200,
+			expErrMsg: "",
 		},
 		{
-			name:        "MC invalid metal",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMC },
-			metal:       "silver",
-			currency:    "EUR",
-			expErrMsg:   "call metal service",
+			name:      "MC invalid metal",
+			metal:     "silver",
+			currency:  "EUR",
+			expCode:   400,
+			expErrMsg: "call metal service",
 		},
 		{
-			name:        "MC invalid currency",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMC },
-			metal:       "silver",
-			currency:    "invalid",
-			expErrMsg:   "call currency service",
+			name:      "MC invalid currency",
+			metal:     "silver",
+			currency:  "invalid",
+			expCode:   400,
+			expErrMsg: "call currency service",
 		},
 		// >>>>>>>>>>>>>>> GetMetalMCU
 		{
-			name:        "MCU ok",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMCU },
-			metal:       "silver",
-			currency:    "EUR",
-			unit:        "lb",
-			expErrMsg:   "",
+			name:      "MCU ok",
+			metal:     "silver",
+			currency:  "EUR",
+			unit:      "lb",
+			expCode:   200,
+			expErrMsg: "",
 		},
 		{
-			name:        "MCU invalid metal",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMCU },
-			metal:       "invalid",
-			currency:    "EUR",
-			unit:        "lb",
-			expErrMsg:   "call metal service",
+			name:      "MCU invalid metal",
+			metal:     "invalid",
+			currency:  "EUR",
+			unit:      "lb",
+			expCode:   400,
+			expErrMsg: "call metal service",
 		},
 		{
-			name:        "MCU invalid currency",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMCU },
-			metal:       "silver",
-			currency:    "invalid",
-			unit:        "lb",
-			expErrMsg:   "call currency service",
+			name:      "MCU invalid currency",
+			metal:     "silver",
+			currency:  "invalid",
+			unit:      "lb",
+			expCode:   400,
+			expErrMsg: "call currency service",
 		},
 		{
-			name:        "MCU invalid unit",
-			handlerFunc: func() gin.HandlerFunc { return h.GetMetalMCU },
-			metal:       "silver",
-			currency:    "EUR",
-			unit:        "invalid",
-			expErrMsg:   "call weight unit converter",
+			name:      "MCU invalid unit",
+			metal:     "silver",
+			currency:  "EUR",
+			unit:      "invalid",
+			expCode:   400,
+			expErrMsg: "call weight unit converter",
 		},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
+			path := fmt.Sprintf("/i/%s", test.metal)
+			if test.currency != "" {
+				path = fmt.Sprintf("%s/%s", path, test.currency)
+
+				if test.unit != "" {
+					path = fmt.Sprintf("%s/%s", path, test.unit)
+				}
+			}
+
+			w := httptest.NewRecorder()
+			r, err := http.NewRequest("GET", path, nil)
+			if err != nil {
+				t1.Fatalf("unable to create new: %s", err.Error())
+			}
+
+			e.ServeHTTP(w, r)
+			if err != nil {
+				t1.Fatalf("unable to read response body: %s", err.Error())
+			}
+
+			fmt.Println(test.name, string(w.Body.Bytes()))
+
+			if w.Code == 400 {
+
+				var httpErr HTTPError
+				err := json.NewDecoder(r.Body).Decode(&httpErr)
+				if err != nil {
+					t1.Fatalf("invalid error response: %s", err.Error())
+				}
+
+				exp := fmt.Sprintf(".*%s.*", test.expErrMsg)
+				assert.MatchRegex(t1, httpErr.Message, exp)
+				assert.Equal(t1, 400, test.expCode)
+
+			} else if w.Code == 200 {
+
+				var resp Response
+				err := json.NewDecoder(r.Body).Decode(&resp)
+				if err != nil {
+					t1.Fatalf("invalid response: %s", err.Error())
+				}
+
+				assert.Equal(t1, resp.Metal, test.metal)
+				if test.currency != "" {
+					assert.Equal(t1, resp.Currency, test.currency)
+
+					if test.unit != "" {
+						assert.Equal(t1, resp.Unit, test.unit)
+					}
+				}
+
+				assert.Equal(t1, 200, test.expCode)
+				assert.Equal(t1, "", test.expErrMsg)
+
+			} else {
+
+				t.Fatalf("unexpected error message: %d", w.Code)
+
+			}
 		})
 	}
 }
