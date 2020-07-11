@@ -56,7 +56,7 @@ func (a *App) Init(cfg *config.Config) error {
 
 	// construct an engine
 	handler := handlers.NewHandler(a.log, cs, ms)
-	a.SetRoutes(handler) // ENGINE
+	a.engine = handler.SetRoutes(a.engine) // ENGINE
 
 	// server
 	a.server = &http.Server{ // SERVER
