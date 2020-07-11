@@ -11,6 +11,7 @@ import (
 
 func TestCurrency(t *testing.T) {
 
+	// NewCurrency
 	currencyConn, err := grpc.Dial("localhsot:10551", grpc.WithInsecure())
 	if err != nil {
 		t.Fatalf("unable to dial localhost:10551: %v", err)
@@ -55,6 +56,7 @@ func TestCurrency(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
+			// GetRate
 			r, err := cs.GetRate(test.base, test.dest)
 			if err != nil {
 

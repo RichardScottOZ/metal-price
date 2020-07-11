@@ -20,7 +20,9 @@ func TestService(t *testing.T) {
 		Source: "https://api.exchangeratesapi.io/latest",
 	}
 
+	// NewService
 	s := NewService(l, cfg)
+	// Init
 	s.Init()
 
 	assert.NotEqual(t, s.log, nil)
@@ -46,6 +48,7 @@ func TestService(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
+			// Run
 			test.action()
 			var err error
 			go func() {

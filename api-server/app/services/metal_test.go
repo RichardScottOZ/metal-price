@@ -11,6 +11,7 @@ import (
 
 func TestMetal(t *testing.T) {
 
+	// NewMetal
 	metalConn, err := grpc.Dial("localhsot:10552", grpc.WithInsecure())
 	if err != nil {
 		t.Fatalf("unable to dial localhost:10521: %v", err)
@@ -56,6 +57,7 @@ func TestMetal(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t1 *testing.T) {
 
+			// GetPrice
 			p, err := ms.GetPrice(test.metal)
 			if err != nil {
 
