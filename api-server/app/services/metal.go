@@ -37,7 +37,7 @@ func (m *Metal) GetPrice(materialP string) (float64, error) {
 	// call the service
 	response, err := m.client.GetPrice(context.Background(), request)
 	if err != nil {
-		return 0, err
+		return -1, fmt.Errorf("metal service: %w", err)
 	}
 
 	// success

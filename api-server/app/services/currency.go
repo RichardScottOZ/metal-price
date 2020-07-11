@@ -24,11 +24,11 @@ func (c *Currency) GetRate(baseP, destP string) (float32, error) {
 
 	base, ok := currency.Currencies_value[baseP]
 	if !ok {
-		return 0, fmt.Errorf("currency %s not found", baseP)
+		return 0, fmt.Errorf("base currency %s not found", baseP)
 	}
 	dest, ok := currency.Currencies_value[destP]
 	if !ok {
-		return 0, fmt.Errorf("currency %s not found", destP)
+		return 0, fmt.Errorf("base currency %s not found", destP)
 	}
 
 	// request of the currency service
@@ -40,7 +40,7 @@ func (c *Currency) GetRate(baseP, destP string) (float32, error) {
 	// call currency service
 	response, err := c.client.GetRate(context.Background(), request)
 	if err != nil {
-		return -1, err
+		return -1, fmt.Errorf("currency service: %w", err)
 	}
 
 	// success
