@@ -8,10 +8,10 @@ type Config struct {
 
 // GetConfig reads from the config file and returns the Config.
 func GetConfig() *Config {
-	return cfg
+	return &cfg
 }
 
-var cfg = &Config{
+var cfg = Config{
 	Port:   10502,
 	Source: "https://www.moneymetals.com/api/spot-prices.json",
 }
