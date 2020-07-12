@@ -23,14 +23,11 @@ func main() {
 	logger := log.New(os.Stdout, "[SERVER] ", log.LstdFlags)
 
 	// config
-	cfg, err := config.GetConfig("config.yaml")
-	if err != nil {
-		logger.Fatalf("get config: %v", err)
-	}
+	cfg := config.GetConfig()
 
 	// init app
 	a := app.NewApp(logger)
-	err = a.Init(cfg)
+	err := a.Init(cfg)
 	if err != nil {
 		logger.Panicf("initialize app: %v", err)
 	}

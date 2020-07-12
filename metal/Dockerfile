@@ -7,9 +7,6 @@ ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
 
-#ENV GIN_MODE=release
-#ENV PORT=10502
-
 # setting up working directory
 WORKDIR /go/src/github.com/chutified/metal-price/metal
 
@@ -19,19 +16,20 @@ COPY go.sum .
 RUN go mod download
 
 # build binary
-ADD . .
+COPY . .
 RUN go build -o main .
+
 
 
 FROM scratch AS production
 
+# set enviroment
 ENV GIN_MODE=release
 ENV PORT=10502
 
 # set the binary
 WORKDIR /root
 COPY --from=builder /go/src/github.com/chutified/metal-price/metal/main .
-COPY --from=builder /go/src/github.com/chutified/metal-price/metal/config.yaml .
 
 # run the metal microservice
 EXPOSE $PORT
