@@ -5,6 +5,7 @@ import (
 	"math"
 	"strings"
 
+	services "github.com/chutified/metal-price/api-server/app/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,6 +23,9 @@ func (h *Handler) GetMetalM(c *gin.Context) {
 	// metal
 	metal := c.Param("metal")
 	metal = strings.ToLower(metal)
+	if mn, ok := services.PeriodicSymbols[metal]; ok {
+		metal = mn
+	}
 
 	// SERVICE CALLS
 	// metal

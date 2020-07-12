@@ -25,6 +25,9 @@ func (h *Handler) GetMetalMCU(c *gin.Context) {
 	// metal
 	metal := c.Param("metal")
 	metal = strings.ToLower(metal)
+	if mn, ok := services.PeriodicSymbols[metal]; ok {
+		metal = mn
+	}
 	// currency
 	curr := c.Param("currency")
 	curr = strings.ToUpper(curr)
