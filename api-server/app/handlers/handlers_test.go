@@ -103,7 +103,7 @@ func TestHandler(t *testing.T) {
 		},
 		{
 			name:      "MC invalid metal",
-			metal:     "silver",
+			metal:     "invalid",
 			currency:  "EUR",
 			expCode:   400,
 			expErrMsg: "call metal service",
@@ -173,12 +173,10 @@ func TestHandler(t *testing.T) {
 				t1.Fatalf("unable to read response body: %s", err.Error())
 			}
 
-			fmt.Println(test.name, string(w.Body.Bytes()))
-
 			if w.Code == 400 {
 
 				var httpErr HTTPError
-				err := json.NewDecoder(r.Body).Decode(&httpErr)
+				err := json.NewDecoder(w.Body).Decode(&httpErr)
 				if err != nil {
 					t1.Fatalf("invalid error response: %s", err.Error())
 				}
@@ -190,7 +188,7 @@ func TestHandler(t *testing.T) {
 			} else if w.Code == 200 {
 
 				var resp Response
-				err := json.NewDecoder(r.Body).Decode(&resp)
+				err := json.NewDecoder(w.Body).Decode(&resp)
 				if err != nil {
 					t1.Fatalf("invalid response: %s", err.Error())
 				}
