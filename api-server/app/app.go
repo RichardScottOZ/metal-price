@@ -41,7 +41,7 @@ func (a *App) Init(cfg *config.Config) error {
 	// currency client
 	currencyConn, err := grpc.Dial(cfg.CurrencyService, grpc.WithInsecure())
 	if err != nil {
-		return fmt.Errorf("unable to dial: %w", err)
+		return fmt.Errorf("unable to dial currency service: %w", err)
 	}
 	a.connections = append(a.connections, currencyConn) // CONN
 	cs := services.NewCurrency(currency.NewCurrencyClient(currencyConn))
@@ -49,7 +49,7 @@ func (a *App) Init(cfg *config.Config) error {
 	// metal client
 	metalConn, err := grpc.Dial(cfg.MetalService, grpc.WithInsecure())
 	if err != nil {
-		return fmt.Errorf("unable to dial: %w", err)
+		return fmt.Errorf("unable to dial metal service: %w", err)
 	}
 	a.connections = append(a.connections, metalConn) // CONN
 	ms := services.NewMetal(metal.NewMetalClient(metalConn))
