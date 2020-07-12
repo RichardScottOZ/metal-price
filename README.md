@@ -12,4 +12,5 @@ TODO:
     Dockerize (kuberts orchestr)
     root Makefile + packages Makefiles
     before running tests, start the services => Makefile
+    endpoints site - examples - in dows md files
     README.md: content, api, test, coverage, tree (3x), docker, kubernetes, examples, config.yamlS, api documentation, make commands, grpc (microservices) - grpcurl examples + results, GIF of usage, list endpoints, show available options of metals, currensieor weight units, instalation - make install, author, license, API sources

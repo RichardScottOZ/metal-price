@@ -12,10 +12,7 @@ func main() {
 	logger := log.New(os.Stdout, "[CURRENCY SERVICE] ", log.LstdFlags)
 
 	// config
-	cfg, err := config.GetConfig("config.yaml")
-	if err != nil {
-		logger.Fatalf("get config: %v", err)
-	}
+	cfg := config.GetConfig()
 
 	// init service
 	s := service.NewService(logger, cfg)
