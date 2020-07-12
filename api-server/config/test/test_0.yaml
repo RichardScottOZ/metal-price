@@ -1,6 +1,0 @@
----
-PORT: 8081
-Currency_Service: localhost:10551
-Metal_Service: localhost:10552
-Debug_Mode: false
-

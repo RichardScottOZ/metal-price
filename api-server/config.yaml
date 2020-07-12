@@ -1,5 +1,0 @@
----
-PORT: 8080
-Currency_Service: localhost:10501
-Metal_Service: localhost:10502
-Debug_Mode: false
