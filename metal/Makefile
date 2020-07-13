@@ -9,7 +9,7 @@ build:
 	docker build -t metal-service .
 
 run:
-	docker run -it -p 10502:10502 metal-service
+	docker run -it --name metalsrv --rm metal-service
 
 rund:
-	docker run -d -p 10502:10502 metal-service
+	docker run -d --name metalsrv --rm metal-service

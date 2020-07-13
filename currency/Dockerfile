@@ -21,11 +21,14 @@ RUN go build -o main .
 
 
 
-FROM scratch AS production
+FROM alpine:latest AS production
 
 # set enviroment
 ENV GIN_MODE=release
 ENV PORT=10501
+
+# install dependencies
+RUN apk update && apk add bash ca-certificates
 
 # set the binary
 WORKDIR /root

@@ -9,7 +9,7 @@ build:
 	docker build -t currency-service .
 
 run:
-	docker run -it -p 10501:10501 currency-service
+	docker run -it --name currencysrv --rm currency-service
 
 rund:
-	docker run -d -p 10501:10501 currency-service
+	docker run -d --name currencysrv --rm currency-service
