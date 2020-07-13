@@ -8,8 +8,8 @@ currencies:
     EUR, CAD, HKD, ISK, PHP, DKK, HUF, CZK, AUD, RON, SEK, IDR, INR, BRL, RUB, HRK, JPY, THB, CHF, SGD, PLN, BGN, TRY, CNY, NOK, NZD, ZAR, USD, MXN, ILS, GBP, KRW, MYR
 
 TODO:
+    Dockerize
     unit tests - api server
-    Dockerize (kuberts orchestr)
     root Makefile + packages Makefiles
     before running tests, start the services => Makefile
     endpoints site - examples - in dows md files

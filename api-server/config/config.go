@@ -15,7 +15,7 @@ func GetConfig() *Config {
 
 var cfg = Config{
 	Port:            8080,
-	CurrencyService: "localhost:10501",
-	MetalService:    "localhost:10502",
+	CurrencyService: "currencysrv:10501",
+	MetalService:    "metalsrv:10502",
 	Debug:           false,
 }
