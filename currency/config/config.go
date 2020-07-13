@@ -2,8 +2,8 @@ package config
 
 // Config holds the configuration values for currency microservice.
 type Config struct {
-	Port   int    `yaml:"PORT"`
-	Source string `yaml:"source"`
+	Port   int
+	Source string
 }
 
 // GetConfig reads from the config file and returns the Config.
