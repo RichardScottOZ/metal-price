@@ -1,5 +1,9 @@
+# UPDATE PROTO FILE
+
 protos:
 	protoc -I protos/ protos/metal.proto --go_out=plugins=grpc:protos/metal
+
+# CLEAN UNWANTED DEPENDENCIES
 
 clean:
 	go mod download

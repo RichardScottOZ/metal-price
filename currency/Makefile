@@ -1,5 +1,9 @@
+# UPDATE PROTO FILE
+
 protos:
 	protoc -I protos/ protos/currency.proto --go_out=plugins=grpc:protos/currency
+
+# CLEAN UNWANTED DEPENDENCIES
 
 clean:
 	go mod download
