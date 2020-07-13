@@ -5,11 +5,13 @@ clean:
 	go mod download
 	go mod tidy
 
+# DOCKER RUN (isolated)
+
 build:
 	docker build -t metal-service .
 
 run:
-	docker run -it --name metalsrv --rm metal-service
+	docker run -it -p 10502:10502 --name metalsrv --rm metal-service
 
 rund:
-	docker run -d --name metalsrv --rm metal-service
+	docker run -d -p 10502:10502 --name metalsrv --rm metal-service

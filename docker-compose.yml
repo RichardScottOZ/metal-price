@@ -1,3 +1,17 @@
-version: 3.8
+version: '3'
 
 services:
+
+  metal_price:
+    build: ./api-server
+    ports:
+      - 8080:80
+    depends_on:
+      - currencysrv
+      - metalsrv
+
+  currencysrv:
+    build: ./currency
+
+  metalsrv:
+    build: ./metal

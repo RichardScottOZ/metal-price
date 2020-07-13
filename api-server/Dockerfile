@@ -25,7 +25,7 @@ FROM scratch AS production
 
 # set enviroment
 ENV GIN_MODE=release
-ENV PORT=8080
+ENV PORT=80
 
 # set the binary
 WORKDIR /root
