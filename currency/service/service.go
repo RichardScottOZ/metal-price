@@ -53,6 +53,6 @@ func (s *Service) Run() error {
 	}
 
 	// listen
-	s.log.Printf("Listening gRPC on port %d", s.cfg.Port)
+	s.log.Printf("Currency service is running (active)")
 	return s.srv.Serve(listen)
 }

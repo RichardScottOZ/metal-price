@@ -39,7 +39,7 @@ func (m *Metal) GetPrice(ctx context.Context, req *metal.MetalRequest) (*metal.M
 	material := req.GetMetal().String()
 
 	// logging
-	m.log.Printf("Handle GetPrice, material: %s\n", material)
+	m.log.Printf("Handling GetPrice; Material: %s\n", material)
 
 	// get price
 	price, err := m.prices.GetPrice(material)
