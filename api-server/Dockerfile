@@ -17,6 +17,7 @@ RUN go mod download
 
 # build binary
 COPY . .
+RUN go mod tidy
 RUN go build -o main .
 
 
