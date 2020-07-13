@@ -1,3 +1,5 @@
+.PHONY: clean build run rund protos
+
 # UPDATE PROTO FILE
 
 protos:

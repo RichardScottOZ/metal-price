@@ -1,3 +1,5 @@
+.PHONY: clean build run rund
+
 # CLEAN UNWANTED DEPENDENCIES
 
 clean:
