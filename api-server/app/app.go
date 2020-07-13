@@ -84,6 +84,6 @@ func (a *App) Stop() []error {
 
 // Run starts the server.
 func (a *App) Run() error {
-	a.log.Printf("Listening and serving HTTP on port %s.\n", a.server.Addr)
+	a.log.Printf("Listening and serving HTTP on port 3001\n")
 	return a.server.ListenAndServe()
 }

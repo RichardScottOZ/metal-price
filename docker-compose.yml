@@ -5,7 +5,7 @@ services:
   metal_price:
     build: ./api-server
     ports:
-      - 8080:80
+      - 3001:80
     depends_on:
       - currencysrv
       - metalsrv

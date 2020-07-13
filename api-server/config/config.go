@@ -3,6 +3,7 @@ package config
 // Config defines the app settings.
 type Config struct {
 	Port            int
+	ExposePort      int
 	CurrencyService string
 	MetalService    string
 	Debug           bool
