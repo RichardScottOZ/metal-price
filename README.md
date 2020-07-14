@@ -1,19 +1,20 @@
 TODO:
-    content, api, test, docker, api documentation, make commands, grpc (microservices) - grpcurl examples + results, author, docker compose, makefile - install: git clone, make build, make run - prerequirements
-
+    content, api, test, docker, grpc (microservices), docker compose
 
 ## Installation
 
 ### Requirements
 - Git
-- Docker Engine (<a href="https://docs.docker.com/engine/install/" target="_blank">install</a>)
 - Docker Compose (<a href="https://docs.docker.com/compose/install/" target="_blank">install</a>)
 
 ```bash
-git clone https://github.com/chutified/metal-price.git
+$ git clone https://github.com/chutified/metal-price.git
 
-make build      # build or rebuild the service
-make run        # start the docker containers
+$ make build      # build or rebuild the service
+$ make run        # start the docker containers
+
+$ curl localhost:3001/ping
+{"message":"pong"}
 ```
 
 ### API sources
@@ -68,6 +69,9 @@ $ curl localhost:3001/i/ag/czk/kg | jq
 }
 ```  
 
+### API documentation
+Swagger 2.0: <a href="">swagger.json</a>
+Run the service and visit: <a href="http://localhost:3001/swagger/index.html" target="_blank">localhost:3001/swagger/index.html</a>
 
 ### Supported weight units
 | **Sign** | **Unit** |
@@ -205,4 +209,29 @@ $ curl localhost:3001/i/ag/czk/kg | jq
  ├── go.sum
  ├── main.go
  └── Makefile
+```
+
+## Testing
+```bash
+[/currency] $ go test -cover ./...
+ok      github.com/chutified/metal-price/currency/config        0.006s  coverage: 100.0% of statements
+ok      github.com/chutified/metal-price/currency/service       2.406s  coverage: 100.0% of statements
+ok      github.com/chutified/metal-price/currency/service/data  (cached)        coverage: 86.8% of statements
+ok      github.com/chutified/metal-price/currency/service/server        0.537s  coverage: 100.0% of statements
+```
+
+```bash
+[/metal] $ go test -cover ./...
+ok      github.com/chutified/metal-price/metal/config   0.002s  coverage: 100.0% of statements
+ok      github.com/chutified/metal-price/metal/service  2.406s  coverage: 100.0% of statements
+ok      github.com/chutified/metal-price/metal/service/data     (cached)        coverage: 89.5% of statements
+ok      github.com/chutified/metal-price/metal/service/server   2.130s  coverage: 100.0% of statements
+```
+
+```bash
+[/api-server] $ go test -cover ./...
+ok      github.com/chutified/metal-price/api-server/app (cached)        coverage: 91.3% of statements
+ok      github.com/chutified/metal-price/api-server/app/handlers        7.167s  coverage: 100.0% of statements
+ok      github.com/chutified/metal-price/api-server/app/services        1.607s  coverage: 100.0% of statements
+ok      github.com/chutified/metal-price/api-server/config      (cached)        coverage: 100.0% of statements
 ```
