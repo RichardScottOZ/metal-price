@@ -1,5 +1,5 @@
 # Metal Price
-Metal Price is a REST API which provides the current prices of the 6 precius metals in 33 different currencies.
+Metal Price is a REST API which provides current prices of the 6 precious metals in 33 different currencies and 6 weight units.
 
 The project uses gRPC in a microservices architecture. All services are containerized in Docker containers and the whole application can be easily run with the multi-container tool Docker Compose (<a href="https://github.com/chutified/metal-price/blob/master/docker-compose.yml">docker-compose.yml</a>).
 
