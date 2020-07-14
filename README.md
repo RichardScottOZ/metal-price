@@ -4,13 +4,13 @@ Metal Price is a REST API which provides the current prices of the 6 precius met
 The project uses gRPC in a microservices architecture. All services are containerized in Docker containers and the whole application can be easily run with the multi-container tool Docker Compose (<a href="https://github.com/chutified/metal-price/blob/master/docker-compose.yml">docker-compose.yml</a>).
 
 ## Services:
-#### - <a href="https://github.com/chutified/metal-price/tree/master/currency">Currency</a>
+#### <a href="https://github.com/chutified/metal-price/tree/master/currency">Currency</a>
 - <a href="https://github.com/chutified/metal-price/tree/master/currency#supported-currencies">Supported currencies</a>
 - <a href="https://github.com/chutified/metal-price/tree/master/currency#directory-structure">Directory structure</a>
 - <a href="https://github.com/chutified/metal-price/tree/master/currency#test-output">Test coverage</a>
 - <a href="https://github.com/chutified/metal-price/blob/master/currency/Dockerfile">Dockerfile</a>
 
-#### - <a href="https://github.com/chutified/metal-price/tree/master/metal">Metal</a>
+#### <a href="https://github.com/chutified/metal-price/tree/master/metal">Metal</a>
 - <a href="https://github.com/chutified/metal-price/tree/master/metal#supported-precious-metals">Supported precious metals</a>
 - <a href="https://github.com/chutified/metal-price/tree/master/metal#directory-structure">Drectory structure</a>
 - <a href="https://github.com/chutified/metal-price/tree/master/metal#test-output">Test coverage</a>
