@@ -9,11 +9,11 @@ how to run isolated
 directory structure - hrefs
 tests
 
-## Installation
-
-### Requirements
+## Requirements
 - Git
 - Docker Compose (<a href="https://docs.docker.com/compose/install/" target="_blank">install</a>)
+
+## Installation
 
 ```bash
 $ git clone https://github.com/chutified/metal-price.git
@@ -37,7 +37,25 @@ $ curl localhost:3001/ping
 | `host:3001/i/{metal}/{currency}`  | current `{metal}` price per `oz` in `{currency}` |
 | `host:3001/i/{metal}/{currency}/{weight-unit}`  | current `{metal}` price per `{weight_unit}` in `{currency}` |
 
+### Usage
+```bash
+$ make build      # build or rebuild the service
+$ make run        # start the docker containers
+
+docker-compose -f docker-compose.yml -p metal-pricer up
+
+Starting metal-pricer_metalsrv_1    ... done
+Starting metal-pricer_currencysrv_1 ... done
+Starting metal-pricer_metal_price_1 ... done
+Attaching to metal-pricer_currencysrv_1, metal-pricer_metalsrv_1, metal-pricer_metal_price_1
+
+currencysrv_1  | [CURRENCY SERVICE] 2020/07/14 07:46:17 Currency service is running (active)
+metalsrv_1     | [METAL SERVICE] 2020/07/14 07:46:17 Metal service is running (active)
+metal_price_1  | [SERVER] 2020/07/14 07:46:18 Listening and serving HTTP on port 3001
+```
+
 ### Examples
+Run in another terminal:
 
 #### host:3001/i/ *{metal}* :
 ```sh
@@ -51,10 +69,9 @@ $ curl localhost:3001/i/rhodium
 }
 ```
 
-
 #### host:3001/i/ *{metal}* / *{currency}* :
 ```sh
-$ curl localhost:3001/i/au/cad | jq
+$ curl localhost:3001/i/au/cad
 
 {
     "metal": "gold",
@@ -64,10 +81,9 @@ $ curl localhost:3001/i/au/cad | jq
 }
 ```
 
-
 #### host:3001/i/ *{metal}* / *{currency}* / *{weight-unit}* :
 ```sh
-$ curl localhost:3001/i/ag/czk/kg | jq
+$ curl localhost:3001/i/ag/czk/kg
 
 {
     "metal": "silver",
@@ -77,33 +93,35 @@ $ curl localhost:3001/i/ag/czk/kg | jq
 }
 ```  
 
+### Logs
+Notice the log messages:
+```bash
+currencysrv_1  | [CURRENCY SERVICE] 2020/07/14 07:46:17 Currency service is running (active)
+metalsrv_1     | [METAL SERVICE] 2020/07/14 07:46:17 Metal service is running (active)
+metal_price_1  | [SERVER] 2020/07/14 07:46:18 Listening and serving HTTP on port 3001
+metalsrv_1     | [METAL SERVICE] 2020/07/14 07:48:01 Handling GetPrice; Material: rhodium
+metal_price_1  | [GIN] 2020/07/14 - 07:48:01 | 200 |  1.261795294s |      172.21.0.1 | GET      "/i/rhodium"
+currencysrv_1  | [CURRENCY SERVICE] 2020/07/14 07:48:27 Handling GetRate; Base: USD, Destination: CAD
+metalsrv_1     | [METAL SERVICE] 2020/07/14 07:48:28 Handling GetPrice; Material: gold
+metal_price_1  | [GIN] 2020/07/14 - 07:48:28 | 200 |  986.333154ms |      172.21.0.1 | GET      "/i/au/cad"
+currencysrv_1  | [CURRENCY SERVICE] 2020/07/14 07:48:30 Handling GetRate; Base: USD, Destination: CZK
+metalsrv_1     | [METAL SERVICE] 2020/07/14 07:48:31 Handling GetPrice; Material: silver
+metal_price_1  | [GIN] 2020/07/14 - 07:48:31 | 200 |   861.97045ms |      172.21.0.1 | GET      "/i/ag/czk/kg"
+```
+
+### Stop the server
+Use <Ctrl-C> to gracefully stop the server and all services:
+```bash
+Stopping metal-pricer_metal_price_1 ... done
+Stopping metal-pricer_currencysrv_1 ... done
+Stopping metal-pricer_metalsrv_1    ... done
+```
+
 ### API documentation
 Swagger 2.0: <a href="">swagger.json</a>
-Run the service and visit: <a href="http://localhost:3001/swagger/index.html" target="_blank">localhost:3001/swagger/index.html</a>
-
-### Supported weight units
-| **Sign** | **Unit** |
-|----------|----------|
-| **oz**  | ounce |
-| **lb**  | pound |
-| **g**   | gram |
-| **dkg** | decagram |
-| **kg**  | kilogram |
-| **t**   | ton |
-
-*Both sign and unit name can be used to select the weight unit.*
-
-
-suppported precious metals
-suppported currencies
-
-
-
-
+Run the service and visit <a href="http://localhost:3001/swagger/index.html" target="_blank">localhost:3001/swagger/index.html</a>.
 
 ## Directory structure
-
-### Root dir
 ```
  /
  ├── api-server
@@ -112,53 +130,4 @@ suppported currencies
  ├── docker-compose.yml
  ├── Makefile
  └── README.md
-```
-
-### Web server
-```bash
- api-server
- ├── app
- │   ├── handlers
- │   │   ├── handler.go
- │   │   ├── handlers_test.go
- │   │   ├── ping.go
- │   │   ├── price-mc.go
- │   │   ├── price-mcu.go
- │   │   ├── price-m.go
- │   │   ├── response-model.go
- │   │   └── routes.go
- │   ├── services
- │   │   ├── currency.go
- │   │   ├── currency_test.go
- │   │   ├── metal.go
- │   │   ├── metal_test.go
- │   │   ├── periodic-symbols.go
- │   │   ├── weightconv.go
- │   │   └── weightconv_test.go
- │   ├── app.go
- │   └── app_test.go
- ├── config
- │   ├── config.go
- │   └── config_test.go
- ├── docs
- │   ├── docs.go
- │   ├── swagger.json
- │   └── swagger.yaml
- ├── Dockerfile
- ├── go.mod
- ├── go.sum
- ├── main.go
- └── Makefile
-```
-metal directory structure
-currency
-
-## Testing
-
-```bash
-[/api-server] $ go test -cover ./...
-ok      github.com/chutified/metal-price/api-server/app (cached)        coverage: 91.3% of statements
-ok      github.com/chutified/metal-price/api-server/app/handlers        7.167s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/api-server/app/services        1.607s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/api-server/config      (cached)        coverage: 100.0% of statements
 ```
