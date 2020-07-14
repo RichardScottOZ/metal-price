@@ -88,6 +88,12 @@ func TestHandler(t *testing.T) {
 			expErrMsg: "",
 		},
 		{
+			name:      "M ok symbol",
+			metal:     "ag",
+			expCode:   200,
+			expErrMsg: "",
+		},
+		{
 			name:      "M invalid metal",
 			metal:     "invalid",
 			expCode:   400,
@@ -97,6 +103,13 @@ func TestHandler(t *testing.T) {
 		{
 			name:      "MC ok",
 			metal:     "silver",
+			currency:  "EUR",
+			expCode:   200,
+			expErrMsg: "",
+		},
+		{
+			name:      "MC ok symbol",
+			metal:     "ag",
 			currency:  "EUR",
 			expCode:   200,
 			expErrMsg: "",
@@ -119,6 +132,14 @@ func TestHandler(t *testing.T) {
 		{
 			name:      "MCU ok",
 			metal:     "silver",
+			currency:  "EUR",
+			unit:      "lb",
+			expCode:   200,
+			expErrMsg: "",
+		},
+		{
+			name:      "MCU ok symbol",
+			metal:     "ag",
 			currency:  "EUR",
 			unit:      "lb",
 			expCode:   200,
@@ -193,6 +214,9 @@ func TestHandler(t *testing.T) {
 					t1.Fatalf("invalid response: %s", err.Error())
 				}
 
+				if mn, ok := services.PeriodicSymbols[test.metal]; ok {
+					test.metal = mn
+				}
 				assert.Equal(t1, resp.Metal, test.metal)
 				if test.currency != "" {
 					assert.Equal(t1, resp.Currency, test.currency)

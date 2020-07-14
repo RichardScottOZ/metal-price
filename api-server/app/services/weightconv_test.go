@@ -25,6 +25,13 @@ func TestGetWeightRate(t *testing.T) {
 			errMsg: "",
 		},
 		{
+			name:   "ok full name",
+			base:   "ounce",
+			dest:   "kilogram",
+			rate:   35.27396,
+			errMsg: "",
+		},
+		{
 			name:   "cross converting",
 			base:   "g",
 			dest:   "kg",
