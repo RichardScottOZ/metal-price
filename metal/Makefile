@@ -3,7 +3,7 @@
 # UPDATE PROTO FILE
 
 protos:
-	protoc -I protos/ protos/metal.proto --go_out=plugins=grpc:protos/metal
+	protoc -I service/protos/ service/protos/metal.proto --go_out=plugins=grpc:service/protos/metal
 
 # CLEAN UNWANTED DEPENDENCIES
 

@@ -3,7 +3,7 @@
 # UPDATE PROTO FILE
 
 protos:
-	protoc -I protos/ protos/currency.proto --go_out=plugins=grpc:protos/currency
+	protoc -I service/protos/ service/protos/currency.proto --go_out=plugins=grpc:service/protos/currency
 
 # CLEAN UNWANTED DEPENDENCIES
 
