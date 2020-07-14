@@ -1,7 +1,24 @@
 TODO:
-    content, api, test, docker, api documentation, make commands, grpc (microservices) - grpcurl examples + results, author, API sources, docker compose, makefile - install: git clone, make build, make run - prerequirements
+    content, api, test, docker, api documentation, make commands, grpc (microservices) - grpcurl examples + results, author, docker compose, makefile - install: git clone, make build, make run - prerequirements
 
 
+## Installation
+
+### Requirements
+- Git
+- Docker Engine (<a href="https://docs.docker.com/engine/install/" target="_blank">install</a>)
+- Docker Compose (<a href="https://docs.docker.com/compose/install/" target="_blank">install</a>)
+
+```bash
+git clone https://github.com/chutified/metal-price.git
+
+make build      # build or rebuild the service
+make run        # start the docker containers
+```
+
+### API sources
+- European Central Bank: <a href="https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml" target="_blank">ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml</a>
+- Money Metals: <a href="https://www.moneymetals.com/api/spot-prices.json" target="_blank">moneymetals.com/api/spot-prices.json</a>
 
 ## Endpoints
 | **Path** | **Response** |
