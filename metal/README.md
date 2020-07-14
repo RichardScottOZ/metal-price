@@ -4,16 +4,18 @@ This service provides current prices of precious metals.
 ### Supported precious metals
 | **Symbol** | **Element** |
 |------------|-------------|
-| **Cu**  | copper | | **Ag**  | silver | | **Au**  | gold |
+| **Cu**  | copper |
+| **Ag**  | silver |
+| **Au**  | gold |
 | **Pt**  | platium |
 | **Pd**  | palladium |
 | **Rh**  | rhodum |
 
-*Both symbol and full element name can be used to select the metal.*
+*Both symbols and full element names can be used to select the metals.*
 
 
 ### Run
-The service can  be run isolated:
+The service can be run isolated:
 ```bash
 [/metal] $ make build       # uses docker engine
 [/metal] $ make run
@@ -35,7 +37,7 @@ $ grpcurl --plaintext -d '{"Metal":"platinum"}' localhost:10502 metal.Metal.GetP
 }
 ```
 
-Notice the log messages in the previous terminal:
+Notice the log messages:
 ```bash
 [METAL SERVICE] 2020/07/14 07:15:04 Metal service is running (active)
 [METAL SERVICE] 2020/07/14 07:20:24 Handling GetPrice; Material: gold

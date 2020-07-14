@@ -12,7 +12,7 @@ Supported weight units:
 | **kg**  | kilogram |
 | **t**   | ton |
 
-*Both sign and unit name can be used to select the weight unit.*
+*Both signs and unit names can be used to select the weight units.*
 
 ### Directory structure
 ```bash

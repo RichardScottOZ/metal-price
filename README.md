@@ -1,8 +1,11 @@
-TODO:
-    content, api, docker, grpc (microservices), docker compose
+# Metal Price
+Metal Price is a REST API which provides the current prices of the 6 precius metals in 33 different currencies.
 
-currency readme
-metal readme
+The project uses gRPC in a microservices architecture. All services are containerized in Docker containers and the whole application can be easily run with the multi-container tool Docker Compose (<a href="">docker-compose.yaml</a>).
+
+## Services:
+#### - <a href="">Currency</a>
+#### - <a href="">Metal</a>
 
 supported vars
 how to run isolated
@@ -11,6 +14,7 @@ tests
 
 ## Requirements
 - Git
+- Docker Engine (<a href="https://docs.docker.com/engine/install/" target="_blank">install</a>)
 - Docker Compose (<a href="https://docs.docker.com/compose/install/" target="_blank">install</a>)
 
 ## Installation
@@ -55,12 +59,11 @@ metal_price_1  | [SERVER] 2020/07/14 07:46:18 Listening and serving HTTP on port
 ```
 
 ### Examples
-Run in another terminal:
+Run these in another terminal.
 
 #### host:3001/i/ *{metal}* :
 ```sh
 $ curl localhost:3001/i/rhodium
-
 {
     "metal": "rhodium",
     "price": 8100,
@@ -72,7 +75,6 @@ $ curl localhost:3001/i/rhodium
 #### host:3001/i/ *{metal}* / *{currency}* :
 ```sh
 $ curl localhost:3001/i/au/cad
-
 {
     "metal": "gold",
     "price": 2455.86,
@@ -84,7 +86,6 @@ $ curl localhost:3001/i/au/cad
 #### host:3001/i/ *{metal}* / *{currency}* / *{weight-unit}* :
 ```sh
 $ curl localhost:3001/i/ag/czk/kg
-
 {
     "metal": "silver",
     "price": 15922.17,
@@ -93,7 +94,6 @@ $ curl localhost:3001/i/ag/czk/kg
 }
 ```  
 
-### Logs
 Notice the log messages:
 ```bash
 currencysrv_1  | [CURRENCY SERVICE] 2020/07/14 07:46:17 Currency service is running (active)
@@ -109,7 +109,6 @@ metalsrv_1     | [METAL SERVICE] 2020/07/14 07:48:31 Handling GetPrice; Material
 metal_price_1  | [GIN] 2020/07/14 - 07:48:31 | 200 |   861.97045ms |      172.21.0.1 | GET      "/i/ag/czk/kg"
 ```
 
-### Stop the server
 Use <Ctrl-C> to gracefully stop the server and all services:
 ```bash
 Stopping metal-pricer_metal_price_1 ... done
@@ -119,6 +118,7 @@ Stopping metal-pricer_metalsrv_1    ... done
 
 ### API documentation
 Swagger 2.0: <a href="">swagger.json</a>
+
 Run the service and visit <a href="http://localhost:3001/swagger/index.html" target="_blank">localhost:3001/swagger/index.html</a>.
 
 ## Directory structure

@@ -13,7 +13,7 @@ This service provides current exchange rates of two currencies.
 </table>
 
 ### Run
-The service can  be run isolated:
+The service can be run isolated:
 ```bash
 [/currency] $ make build       # uses docker engine
 [/currency] $ make run
@@ -35,7 +35,7 @@ $ grpcurl --plaintext -d '{"Base":"CAD","Destination":"RUB"}' localhost:10501 cu
 }
 ```
 
-Notice the log messages in the previous terminal:
+Notice the log messages:
 ```bash
 [CURRENCY SERVICE] 2020/07/14 07:31:21 Currency service is running (active)
 [CURRENCY SERVICE] 2020/07/14 07:32:59 Handling GetRate; Base: USD, Destination: EUR
