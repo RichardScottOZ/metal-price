@@ -1,5 +1,5 @@
 TODO:
-    content, api, test, tree (3x), docker, api documentation, make commands, grpc (microservices) - grpcurl examples + results, instalation - make install, author, API sources, docker compose, makefile - install: git clone, make build, make run - prerequirements
+    content, api, test, docker, api documentation, make commands, grpc (microservices) - grpcurl examples + results, author, API sources, docker compose, makefile - install: git clone, make build, make run - prerequirements
 
 
 
@@ -51,6 +51,7 @@ $ curl localhost:3001/i/ag/czk/kg | jq
 }
 ```  
 
+
 ### Supported weight units
 | **Sign** | **Unit** |
 |----------|----------|
@@ -87,3 +88,104 @@ $ curl localhost:3001/i/ag/czk/kg | jq
     <tr> <td>NZD</td> <td>ZAR</td> <td>USD</td> <td>MXN</td> <td>ILS</td> </tr>
     <tr> <td>GBP</td> <td>KRW</td> <td>MYR</td> </tr>
 </table>
+
+
+## Directory structure
+
+### Root dir
+```
+ /
+ ├── api-server
+ ├── currency
+ ├── metal
+ ├── docker-compose.yml
+ ├── Makefile
+ └── README.md
+```
+
+### Web server
+```bash
+ api-server
+ ├── app
+ │   ├── handlers
+ │   │   ├── handler.go
+ │   │   ├── handlers_test.go
+ │   │   ├── ping.go
+ │   │   ├── price-mc.go
+ │   │   ├── price-mcu.go
+ │   │   ├── price-m.go
+ │   │   ├── response-model.go
+ │   │   └── routes.go
+ │   ├── services
+ │   │   ├── currency.go
+ │   │   ├── currency_test.go
+ │   │   ├── metal.go
+ │   │   ├── metal_test.go
+ │   │   ├── periodic-symbols.go
+ │   │   ├── weightconv.go
+ │   │   └── weightconv_test.go
+ │   ├── app.go
+ │   └── app_test.go
+ ├── config
+ │   ├── config.go
+ │   └── config_test.go
+ ├── docs
+ │   ├── docs.go
+ │   ├── swagger.json
+ │   └── swagger.yaml
+ ├── Dockerfile
+ ├── go.mod
+ ├── go.sum
+ ├── main.go
+ └── Makefile
+```
+
+### Currency service
+```bash
+ currency
+ ├── config
+ │   ├── config.go
+ │   └── config_test.go
+ ├── service
+ │   ├── data
+ │   │   ├── rates.go
+ │   │   └── rates_test.go
+ │   ├── protos
+ │   │   ├── currency
+ │   │   │   └── currency.pb.go
+ │   │   └── currency.proto
+ │   ├── server
+ │   │   ├── currency.go
+ │   │   └── currency_test.go
+ │   ├── service.go
+ │   └── service_test.go
+ ├── Dockerfile
+ ├── go.mod
+ ├── go.sum
+ ├── main.go
+ └── Makefile
+```
+
+### Metal service
+```bash
+ metal ├── config │   ├── config.go
+ │   └── config_test.go
+ ├── service
+ │   ├── data
+ │   │   ├── prices.go
+ │   │   └── prices_test.go
+ │   ├── protos
+ │   │   ├── metal
+ │   │   │   └── metal.pb.go
+ │   │   └── metal.proto
+ │   ├── server
+ │   │   ├── metal.go
+ │   │   └── metal_test.go
+ │   ├── service.go
+ │   └── service_test.go
+ ├── Dockerfile
+ ├── go.mod
+ ├── go.sum
+ ├── main.go
+ └── Makefile
+```
