@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	config "github.com/chutified/metal-price/api-server/config"
+	config "github.com/chutommy/metal-price/api-server/config"
 	"gopkg.in/go-playground/assert.v1"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
 )
 
 // Currency handles the currency services.

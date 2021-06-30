@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
-	app "github.com/chutified/metal-price/api-server/app"
-	config "github.com/chutified/metal-price/api-server/config"
-	_ "github.com/chutified/metal-price/api-server/docs" // documentation
+	app "github.com/chutommy/metal-price/api-server/app"
+	config "github.com/chutommy/metal-price/api-server/config"
+	_ "github.com/chutommy/metal-price/api-server/docs" // documentation
 )
 
 // @title Metal Price API

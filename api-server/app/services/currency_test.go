@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
 	"google.golang.org/grpc"
 	"gopkg.in/go-playground/assert.v1"
 )

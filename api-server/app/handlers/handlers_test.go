@@ -10,9 +10,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	services "github.com/chutified/metal-price/api-server/app/services"
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
-	metal "github.com/chutified/metal-price/metal/service/protos/metal"
+	services "github.com/chutommy/metal-price/api-server/app/services"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
+	metal "github.com/chutommy/metal-price/metal/service/protos/metal"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"gopkg.in/go-playground/assert.v1"

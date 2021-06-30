@@ -5,7 +5,7 @@ import (
 	"math"
 	"strings"
 
-	services "github.com/chutified/metal-price/api-server/app/services"
+	services "github.com/chutommy/metal-price/api-server/app/services"
 	"github.com/gin-gonic/gin"
 )
 

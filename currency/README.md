@@ -71,8 +71,8 @@ Notice the log messages:
 ### Test output
 ```bash
 [/currency] $ go test -cover ./...
-ok      github.com/chutified/metal-price/currency/config        0.006s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/currency/service       2.406s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/currency/service/data  (cached)        coverage: 86.8% of statements
-ok      github.com/chutified/metal-price/currency/service/server        0.537s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/currency/config        0.006s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/currency/service       2.406s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/currency/service/data  (cached)        coverage: 86.8% of statements
+ok      github.com/chutommy/metal-price/currency/service/server        0.537s  coverage: 100.0% of statements
 ```

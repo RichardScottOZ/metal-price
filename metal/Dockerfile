@@ -8,7 +8,7 @@ ENV GOOS=linux
 ENV GOARCH=amd64
 
 # setting up working directory
-WORKDIR /go/src/github.com/chutified/metal-price/metal
+WORKDIR /go/src/github.com/chutommy/metal-price/metal
 
 # install dependencies
 COPY go.mod .
@@ -33,7 +33,7 @@ RUN apk update && apk add bash ca-certificates
 
 # set the binary
 WORKDIR /root
-COPY --from=builder /go/src/github.com/chutified/metal-price/metal/main .
+COPY --from=builder /go/src/github.com/chutommy/metal-price/metal/main .
 
 # run the metal microservice
 EXPOSE $PORT

@@ -1,20 +1,20 @@
 # Metal Price
 Metal Price is an API (REST) which provides resl-time market prices of 6 precious metals in 33 different currencies and 6 weight units.
 
-The project uses gRPC within internal microservices architecture. All services are containerized in Docker containers and the whole application can be easily run with the multi-container tool Docker Compose (<a href="https://github.com/chutified/metal-price/blob/master/docker-compose.yml">docker-compose.yml</a>).
+The project uses gRPC within internal microservices architecture. All services are containerized in Docker containers and the whole application can be easily run with the multi-container tool Docker Compose (<a href="https://github.com/chutommy/metal-price/blob/master/docker-compose.yml">docker-compose.yml</a>).
 
 ## Services:
-#### <a href="https://github.com/chutified/metal-price/tree/master/currency">Currency</a>
-- <a href="https://github.com/chutified/metal-price/tree/master/currency#supported-currencies">Supported currencies</a>
-- <a href="https://github.com/chutified/metal-price/tree/master/currency#directory-structure">Directory structure</a>
-- <a href="https://github.com/chutified/metal-price/tree/master/currency#test-output">Test coverage</a>
-- <a href="https://github.com/chutified/metal-price/blob/master/currency/Dockerfile">Dockerfile</a>
+#### <a href="https://github.com/chutommy/metal-price/tree/master/currency">Currency</a>
+- <a href="https://github.com/chutommy/metal-price/tree/master/currency#supported-currencies">Supported currencies</a>
+- <a href="https://github.com/chutommy/metal-price/tree/master/currency#directory-structure">Directory structure</a>
+- <a href="https://github.com/chutommy/metal-price/tree/master/currency#test-output">Test coverage</a>
+- <a href="https://github.com/chutommy/metal-price/blob/master/currency/Dockerfile">Dockerfile</a>
 
-#### <a href="https://github.com/chutified/metal-price/tree/master/metal">Metal</a>
-- <a href="https://github.com/chutified/metal-price/tree/master/metal#supported-precious-metals">Supported precious metals</a>
-- <a href="https://github.com/chutified/metal-price/tree/master/metal#directory-structure">Drectory structure</a>
-- <a href="https://github.com/chutified/metal-price/tree/master/metal#test-output">Test coverage</a>
-- <a href="https://github.com/chutified/metal-price/blob/master/metal/Dockerfile">Dockerfile</a>
+#### <a href="https://github.com/chutommy/metal-price/tree/master/metal">Metal</a>
+- <a href="https://github.com/chutommy/metal-price/tree/master/metal#supported-precious-metals">Supported precious metals</a>
+- <a href="https://github.com/chutommy/metal-price/tree/master/metal#directory-structure">Drectory structure</a>
+- <a href="https://github.com/chutommy/metal-price/tree/master/metal#test-output">Test coverage</a>
+- <a href="https://github.com/chutommy/metal-price/blob/master/metal/Dockerfile">Dockerfile</a>
 
 ## Installation
 
@@ -24,7 +24,7 @@ The project uses gRPC within internal microservices architecture. All services a
 - Docker Compose (<a href="https://docs.docker.com/compose/install/" target="_blank">install</a>)
 
 ```bash
-$ git clone https://github.com/chutified/metal-price.git
+$ git clone https://github.com/chutommy/metal-price.git
 
 $ make build      # build or rebuild the service
 $ make run        # start the docker containers
@@ -121,7 +121,7 @@ Stopping metal-pricer_metalsrv_1    ... done
 ```
 
 ### API documentation
-Swagger 2.0: <a href="https://github.com/chutified/metal-price/blob/master/api-server/docs/swagger.json">swagger.json</a>
+Swagger 2.0: <a href="https://github.com/chutommy/metal-price/blob/master/api-server/docs/swagger.json">swagger.json</a>
 
 Run the service and visit <a href="http://localhost:3001/swagger/index.html" target="_blank">localhost:3001/swagger/index.html</a>.
 

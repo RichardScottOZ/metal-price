@@ -7,8 +7,8 @@ import (
 	"log"
 	"testing"
 
-	config "github.com/chutified/metal-price/metal/config"
-	metal "github.com/chutified/metal-price/metal/service/protos/metal"
+	config "github.com/chutommy/metal-price/metal/config"
+	metal "github.com/chutommy/metal-price/metal/service/protos/metal"
 	"gopkg.in/go-playground/assert.v1"
 )
 

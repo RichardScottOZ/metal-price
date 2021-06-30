@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 
-	config "github.com/chutified/metal-price/metal/config"
-	data "github.com/chutified/metal-price/metal/service/data"
-	metal "github.com/chutified/metal-price/metal/service/protos/metal"
+	config "github.com/chutommy/metal-price/metal/config"
+	data "github.com/chutommy/metal-price/metal/service/data"
+	metal "github.com/chutommy/metal-price/metal/service/protos/metal"
 )
 
 // Metal is a the service server.

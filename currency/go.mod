@@ -1,4 +1,4 @@
-module github.com/chutified/metal-price/currency
+module github.com/chutommy/metal-price/currency
 
 go 1.14
 

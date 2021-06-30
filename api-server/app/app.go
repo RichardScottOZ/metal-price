@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	handlers "github.com/chutified/metal-price/api-server/app/handlers"
-	services "github.com/chutified/metal-price/api-server/app/services"
-	config "github.com/chutified/metal-price/api-server/config"
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
-	metal "github.com/chutified/metal-price/metal/service/protos/metal"
+	handlers "github.com/chutommy/metal-price/api-server/app/handlers"
+	services "github.com/chutommy/metal-price/api-server/app/services"
+	config "github.com/chutommy/metal-price/api-server/config"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
+	metal "github.com/chutommy/metal-price/metal/service/protos/metal"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 )

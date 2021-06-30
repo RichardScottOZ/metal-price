@@ -8,7 +8,7 @@ ENV GOOS=linux
 ENV GOARCH=amd64
 
 # setting up working directory
-WORKDIR /go/src/github.com/chutified/metal-price/api-server
+WORKDIR /go/src/github.com/chutommy/metal-price/api-server
 
 # install dependencies
 COPY go.mod .
@@ -30,7 +30,7 @@ ENV PORT=3001
 
 # set the binary
 WORKDIR /root
-COPY --from=builder /go/src/github.com/chutified/metal-price/api-server/main .
+COPY --from=builder /go/src/github.com/chutommy/metal-price/api-server/main .
 
 # run the currency microservice
 EXPOSE $PORT

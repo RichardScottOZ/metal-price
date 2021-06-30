@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 
-	config "github.com/chutified/metal-price/currency/config"
-	data "github.com/chutified/metal-price/currency/service/data"
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
+	config "github.com/chutommy/metal-price/currency/config"
+	data "github.com/chutommy/metal-price/currency/service/data"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
 )
 
 // Currency is a currency server.

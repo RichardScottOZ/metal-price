@@ -5,9 +5,9 @@ import (
 	"log"
 	"net"
 
-	config "github.com/chutified/metal-price/currency/config"
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
-	server "github.com/chutified/metal-price/currency/service/server"
+	config "github.com/chutommy/metal-price/currency/config"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
+	server "github.com/chutommy/metal-price/currency/service/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

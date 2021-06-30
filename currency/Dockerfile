@@ -8,7 +8,7 @@ ENV GOOS=linux
 ENV GOARCH=amd64
 
 # setting up working directory
-WORKDIR /go/src/github.com/chutified/metal-price/currency
+WORKDIR /go/src/github.com/chutommy/metal-price/currency
 
 # install dependencies
 COPY go.mod .
@@ -33,7 +33,7 @@ RUN apk update && apk add bash ca-certificates
 
 # set the binary
 WORKDIR /root
-COPY --from=builder /go/src/github.com/chutified/metal-price/currency/main .
+COPY --from=builder /go/src/github.com/chutommy/metal-price/currency/main .
 
 # run the currency microservice
 EXPOSE $PORT

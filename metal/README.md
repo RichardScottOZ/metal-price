@@ -73,8 +73,8 @@ Notice the log messages:
 ### Test output
 ```bash
 [/metal] $ go test -cover ./...
-ok      github.com/chutified/metal-price/metal/config   0.002s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/metal/service  2.406s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/metal/service/data     (cached)        coverage: 89.5% of statements
-ok      github.com/chutified/metal-price/metal/service/server   2.130s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/metal/config   0.002s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/metal/service  2.406s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/metal/service/data     (cached)        coverage: 89.5% of statements
+ok      github.com/chutommy/metal-price/metal/service/server   2.130s  coverage: 100.0% of statements
 ```

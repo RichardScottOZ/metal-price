@@ -54,8 +54,8 @@ Supported weight units:
 ### Test output
 ```bash
 [/api-server] $ go test -cover ./...
-ok      github.com/chutified/metal-price/api-server/app (cached)        coverage: 91.3% of statements
-ok      github.com/chutified/metal-price/api-server/app/handlers        7.167s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/api-server/app/services        1.607s  coverage: 100.0% of statements
-ok      github.com/chutified/metal-price/api-server/config      (cached)        coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/api-server/app (cached)        coverage: 91.3% of statements
+ok      github.com/chutommy/metal-price/api-server/app/handlers        7.167s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/api-server/app/services        1.607s  coverage: 100.0% of statements
+ok      github.com/chutommy/metal-price/api-server/config      (cached)        coverage: 100.0% of statements
 ```

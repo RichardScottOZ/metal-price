@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	config "github.com/chutified/metal-price/metal/config"
+	config "github.com/chutommy/metal-price/metal/config"
 	"gopkg.in/go-playground/assert.v1"
 )
 

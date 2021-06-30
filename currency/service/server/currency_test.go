@@ -7,8 +7,8 @@ import (
 	"log"
 	"testing"
 
-	config "github.com/chutified/metal-price/currency/config"
-	currency "github.com/chutified/metal-price/currency/service/protos/currency"
+	config "github.com/chutommy/metal-price/currency/config"
+	currency "github.com/chutommy/metal-price/currency/service/protos/currency"
 	"gopkg.in/go-playground/assert.v1"
 )
 
